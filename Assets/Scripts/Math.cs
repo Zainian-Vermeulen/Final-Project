@@ -132,8 +132,6 @@ public class Math : MonoBehaviour
                     sum =  num1 + num2;
                     sign = "+";
                     Debug.Log("Sum is: " + sum);
-                    Debug.Log(" ");
-                    sign = "+";
                     break;
 
                 }
