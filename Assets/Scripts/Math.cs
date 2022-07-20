@@ -26,8 +26,8 @@ public class Math : MonoBehaviour
     [SerializeField]
     private TMP_Text _playerFinalScore;
 
-    public double sum = 0.0;
-    private int numx, numy, numz, numOp, numOp2;
+    public double sumEquation = 0.0;
+    private int numx, numy, numz, numOp;
     public string sign;
 
     public event System.Action shootEvent;
@@ -48,11 +48,12 @@ public class Math : MonoBehaviour
     private void Start()
     {
         playerDif = PlayerPrefs.GetString("PlayerDifficulty");
-        Numbers(1,11,1,11);
         _playerScore.text = $"Score: {playerCurrentScore}";
         //playerHighScore = PlayerPrefs.GetInt("HighScore_Equations", 0);
 
         currentScene = SceneManager.GetActiveScene().buildIndex;
+        Debug.Log("Current scene is: " + currentScene);
+        Numbers(1,11,1,11);
 
         if (currentScene == 1)
         {
@@ -129,36 +130,36 @@ public class Math : MonoBehaviour
         {
             case MathOperator.Plus :
                 {
-                    sum =  num1 + num2;
+                    sumEquation =  num1 + num2;
                     sign = "+";
-                    Debug.Log("Sum is: " + sum);
+                    Debug.Log("Sum is: " + sumEquation);
                     break;
 
                 }
 
             case MathOperator.Minus:
                 {
-                    sum = num1 - num2;
+                    sumEquation = num1 - num2;
                     sign = "-";
-                    Debug.Log("Sum is: " + sum);
+                    Debug.Log("Sum is: " + sumEquation);
 
                     break;
                 }
 
             case MathOperator.Multiply:
                 {
-                    sum = num1 * num2;
+                    sumEquation = num1 * num2;
                     sign = "*";
-                    Debug.Log("Sum is: " + sum);
+                    Debug.Log("Sum is: " + sumEquation);
 
                     break;
                 }
 
             case MathOperator.Divide:
                 {
-                    sum = num1 / num2;
+                    sumEquation = num1 / num2;
                     sign = "/";
-                    Debug.Log("Sum is: " + sum);
+                    Debug.Log("Sum is: " + sumEquation);
                     break;
                 }
 
@@ -172,8 +173,6 @@ public class Math : MonoBehaviour
         numx = Random.Range(numXMin, numXMax);
         numy = Random.Range(numYMin, numYMax);
         numOp = Random.Range(0, 20);
-        
-        // numOp2 = Random.Range(0, 1);
 
         //ensures no negative numbers
         if (numx < numy)
@@ -183,24 +182,35 @@ public class Math : MonoBehaviour
             numy = numz;
         }
 
-        if (playerDif == "E")
+        switch (playerDif)
         {
-            MathDifficult(Difficulty.Easy);
+            case "E":
+                {
+                    MathDifficult(Difficulty.Easy);
+                }
+                break;
+                
+            case "M":
+                {
+                    MathDifficult(Difficulty.Medium);
+                }
+                break;
+
+            case "H":
+                {
+                    MathDifficult(Difficulty.Hard);
+                }
+                break;
+
+            case "":
+                {
+                    MathDifficult(Difficulty.Hard);
+                }
+                break;
+            
+            default:
+                break;
         }
-        else if (playerDif == "M")
-        {
-            MathDifficult(Difficulty.Medium);
-        }
-        else if (playerDif == "H")
-        {
-            MathDifficult(Difficulty.Hard);
-        }
-        else if(playerDif == "")
-        {
-            MathDifficult(Difficulty.Hard);
-        }
-        else
-            return;
 
         Debug.Log("Difficulty is: " + playerDif);
         _mathText.text = $"{numx} {sign} {numy} = ";
@@ -208,107 +218,112 @@ public class Math : MonoBehaviour
     }
     private void MathDifficult(Difficulty dif)
     {
-        switch (dif)
+        //Multiply | Divide
+        if (currentScene == 1)
         {
-            case Difficulty.Easy:
-                {
-                    if (numOp <= 10)
+            switch (dif)
+            {
+                case Difficulty.Easy: // *
+                    {
+                        Calculate(numx, numy, MathOperator.Multiply);
+
+                        sign = "*";
+                        difFactor = 20;
+                    }
+                    break;
+
+                case Difficulty.Medium: // /
+                    {
+                        Calculate(numx, numy, MathOperator.Divide);
+
+                        sign = "/";
+                        difFactor = 20;
+                    }
+                    break;
+
+                case Difficulty.Hard: // * or /
+                    {
+                        if(numOp <= 10)
+                        {
+                            Calculate(numx, numy, MathOperator.Multiply);
+
+                            sign = "*";
+                            difFactor = 50;
+                        }
+                        else if (numOp > 10 && numOp <= 20)
+                        {
+
+                            int mod = numx % numy;
+                            if (mod > 0)
+                            {
+                                Numbers(1, 11, 1, 11);
+                                return;
+                            }
+
+                            Calculate(numx, numy, MathOperator.Divide);
+                            sign = "/";
+                            difFactor = 50;
+                        }          
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+        }
+        else if (currentScene == 2) //Plus | minus
+        {
+            switch (dif)
+            {
+
+                case Difficulty.Easy: // +
                     {
                         Calculate(numx, numy, MathOperator.Plus);
 
                         sign = "+";
-                        difFactor = 10;
-                    }
-                    else if (numOp > 10)
-                    {
-                        Calculate(numx, numy, MathOperator.Minus);
-                        
-                        sign = "-";
-                        difFactor = 10;
+                        difFactor = 20;
                     }
                     break;
-                }
-
-           case Difficulty.Medium:
-                {
-                    if (numOp <= 10)
+                case Difficulty.Medium: // -
                     {
-                        Calculate(numx, numy, MathOperator.Multiply);
-                     
-                        sign = "*";
-                        difFactor = 50;
-                    }
-                    else if (numOp > 10)
-                    {
-                        int mod = numx % numy;
-
-                        if (mod > 0)
-                        {
-                            Numbers(1, 11, 1, 11);
-                            return;
-                        }
-                        
-             
-                        Calculate(numx, numy, MathOperator.Divide);
-                        sign = "/";
-                        difFactor = 50;
-                    }
-                    break;
-                }
-
-            case Difficulty.Hard:
-                {
-                    if (numOp <= 5)
-                    {
-                        Debug.Log("NumOp is: " + numOp + " = +");
-
-                        Calculate(numx, numy, MathOperator.Plus);
-
-                        sign = "+";
-                        difFactor = 10;
-                    }
-                    else if (numOp > 5 && numOp <= 10)
-                    {
-                        Debug.Log("NumOp is: " + numOp + " = -");
-
                         Calculate(numx, numy, MathOperator.Minus);
 
                         sign = "-";
-                        difFactor = 10;
-                    }
-                    else if (numOp > 10 && numOp <= 15)
-                    {
-                        Debug.Log("NumOp is: " + numOp + " = *");
-                        Calculate(numx, numy, MathOperator.Multiply);
-
-                        sign = "*";
-                        difFactor = 50;
-                    }
-                    else if (numOp > 15 && numOp <= 20)
-                    {
-                        Debug.Log("NumOp is: " + numOp + " = /");
-
-                        int mod = numx % numy;
-                        if (mod > 0)
-                        {
-                            Numbers(1, 11, 1, 11);
-                            return;
-                        }
-
-                        Calculate(numx, numy, MathOperator.Divide);
-                        sign = "/";
-                        difFactor = 50;
+                        difFactor = 20;
                     }
                     break;
-                }
+                case Difficulty.Hard: // + or -
+                    {
+                        if (numOp <= 10)
+                        {
+
+                            Calculate(numx, numy, MathOperator.Plus);
+
+                            sign = "+";
+                            difFactor = 50;
+                        }
+                        else if (numOp > 10 && numOp <= 20)
+                        {
+
+                            Calculate(numx, numy, MathOperator.Minus);
+
+                            sign = "-";
+                            difFactor = 50;
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }           
         }
     }
-
+ 
     public void OnMathClick()
     {
         int i;
         int playerNumber = 0;
         bool result = int.TryParse(_mathInputText.text, out i);
+        playerCurrentScore = 0;
 
         if (result)
         {
@@ -322,23 +337,27 @@ public class Math : MonoBehaviour
         }
 
 
-        if (playerNumber != sum)
+        if (playerNumber != sumEquation)
         {
             Debug.Log("You lose");
             _mathInputText.text = "";
             InputFieldFocus();
             _mathInputTextPaceHolder.text = "Try Again.";
+            _playerFinalScore.text = $"Final score is: 0";
+
             MathIncorrect?.Invoke();
 
             return;
            
         }
-        else if (playerNumber == sum)
+        
+        else if (playerNumber == sumEquation)
         {
             Numbers(1,11,1,11);
             InputFieldFocus();
             _mathInputTextPaceHolder.text = "Type here.";
             playerCurrentScore += difFactor;
+            
             playerFinalScore = playerCurrentScore;
             _playerScore.text = $"Score: {playerCurrentScore}";
             _playerFinalScore.text = $"Final score is: {playerFinalScore}";
@@ -368,7 +387,6 @@ public class Math : MonoBehaviour
             {
                 switch (playerDif)
                 {
-
                     case "E":
                         PlayerHighScore("HighScore_Linear_Easy", playerHighScoreEasy);
                         break;
@@ -381,10 +399,7 @@ public class Math : MonoBehaviour
                     default:
                         break;
                 }
-            }
-
-           
-            
+            }        
         }
     }
 

@@ -209,13 +209,13 @@ public class MainMenu : MonoBehaviour
     public void OnDifSelectLoadEquations()
     {
         currentScene = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentScene + 1);
+        SceneManager.LoadSceneAsync(currentScene + 1);
     }
 
     public void OnDifSelectLoadLinear()
     {
         currentScene = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentScene + 2);
+        SceneManager.LoadSceneAsync(currentScene + 2);
     }
 
     public void QuitGame()

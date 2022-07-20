@@ -32,6 +32,9 @@ public class UIHandler : MonoBehaviour
     [SerializeField]
     private GameObject _gameOver;
 
+    [SerializeField]
+    private TMP_Text _gameWon;
+
     private int currentScene;
 
     [SerializeField]
@@ -61,11 +64,10 @@ public class UIHandler : MonoBehaviour
         _playerLife3Img.gameObject.SetActive(true);
 
         _playerMovement = FindObjectOfType<PlayerMovement>();
-        _playerMovement.GameOver += OnGameOver;
-
-
-        currentScene = SceneManager.GetActiveScene().buildIndex;
-
+        if (_playerMovement != null)
+            _playerMovement.GameOver += OnGameOver;
+        else
+            return;       
     }
 
     private void FixedUpdate()
@@ -78,7 +80,7 @@ public class UIHandler : MonoBehaviour
             return;
 
 
-        QuestionsGameOver();
+        
     }
 
 
@@ -107,6 +109,8 @@ public class UIHandler : MonoBehaviour
         if (questionsIncorrect == 3)
         {
             _playerLife1Img.gameObject.SetActive(false);
+            _gameWon.text = "Game Over!";
+            QuestionsGameOver();
         }
 
 
@@ -118,23 +122,22 @@ public class UIHandler : MonoBehaviour
     private void OnMathCorrect()
     {
         questionsCorrect += 1;
+        if (questionsCorrect == 10)
+        {
+            _gameWon.text = "You Won!";
+            QuestionsGameOver();
+
+        }
         Debug.Log("Questions correct is: " + questionsCorrect);
 
     }
 
     private void QuestionsGameOver()
     {
+        currentScene = SceneManager.GetActiveScene().buildIndex;
         if (currentScene == 1)
         {
-            if (questionsCorrect == 10)
-            {
-                OnGameOver();
-            }
-
-            if (questionsIncorrect == 3)
-            {
-                OnGameOver();
-            }
+            OnGameOver();
         }   
     }
 
@@ -161,10 +164,9 @@ public class UIHandler : MonoBehaviour
 
     private void OnGameOver()
     {
-        PauseGame(true);
         _gameOver.gameObject.SetActive(true);
+        PauseGame(true);
     }
-
 
     public void OnRestartClick()
     {       
@@ -173,7 +175,6 @@ public class UIHandler : MonoBehaviour
 
     public void OnMainMenuClick()
     {
-        Debug.Log("I am here now");
         SceneManager.LoadScene(0);
         PauseGame(false);
     }

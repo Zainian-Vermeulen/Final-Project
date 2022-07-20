@@ -2034,9 +2034,11 @@ MonoBehaviour:
   _mathText: {fileID: 99554712}
   _playerScore: {fileID: 1166642079}
   _playerFinalScore: {fileID: 1507916628}
-  sum: 0
+  sumEquation: 0
   sign: 
-  playerHighScore: 0
+  playerHighScoreEasy: 0
+  playerHighScoreMedium: 0
+  playerHighScoreHard: 0
 --- !u!1 &1460404257
 GameObject:
   m_ObjectHideFlags: 0
@@ -2654,6 +2656,7 @@ MonoBehaviour:
   _playerLife2Img: {fileID: 724851272}
   _playerLife3Img: {fileID: 684456716}
   _gameOver: {fileID: 1753558894}
+  _gameWon: {fileID: 1755884610}
   _math: {fileID: 1408504509}
 --- !u!1 &1753558894
 GameObject:
@@ -2672,7 +2675,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1753558895
 RectTransform:
   m_ObjectHideFlags: 0
