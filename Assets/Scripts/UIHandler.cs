@@ -55,7 +55,6 @@ public class UIHandler : MonoBehaviour
         _backgroundImg.gameObject.SetActive(false);
 
         _enemy = FindObjectOfType<Enemy>();
-        //_hitTarget.GameOver += OnGameOver;
 
         _gameOver.gameObject.SetActive(false);
 
@@ -65,7 +64,10 @@ public class UIHandler : MonoBehaviour
 
         _playerMovement = FindObjectOfType<PlayerMovement>();
         if (_playerMovement != null)
+        {
+            _playerMovement.GameWon += OnGameWon;
             _playerMovement.GameOver += OnGameOver;
+        }
         else
             return;       
     }
@@ -83,6 +85,11 @@ public class UIHandler : MonoBehaviour
         
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.Escape))
+            OnMenuClick();
+    }
 
     private void OnMathIncorrect()
     {
@@ -109,7 +116,7 @@ public class UIHandler : MonoBehaviour
         if (questionsIncorrect == 3)
         {
             _playerLife1Img.gameObject.SetActive(false);
-            _gameWon.text = "Game Over!";
+            
             QuestionsGameOver();
         }
 
@@ -124,7 +131,7 @@ public class UIHandler : MonoBehaviour
         questionsCorrect += 1;
         if (questionsCorrect == 10)
         {
-            _gameWon.text = "You Won!";
+           // _gameWon.text = "You Won!";
             QuestionsGameOver();
 
         }
@@ -132,8 +139,11 @@ public class UIHandler : MonoBehaviour
 
     }
 
+   
+
     private void QuestionsGameOver()
     {
+        //_gameWon.text = "Game Over!";
         currentScene = SceneManager.GetActiveScene().buildIndex;
         if (currentScene == 1)
         {
@@ -155,15 +165,17 @@ public class UIHandler : MonoBehaviour
         PauseGame(false);
     }
 
-
-    private void Update()
+    private void OnGameWon()
     {
-        if (Input.GetKeyUp(KeyCode.Escape))
-            OnMenuClick();
+
+        _gameWon.text = "You Won!";
+        _gameOver.gameObject.SetActive(true);
+        PauseGame(true);
     }
 
     private void OnGameOver()
     {
+        _gameWon.text = "You Over!";
         _gameOver.gameObject.SetActive(true);
         PauseGame(true);
     }

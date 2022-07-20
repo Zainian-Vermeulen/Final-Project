@@ -9,9 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: e866172f7578e444cbc6a6c05ab8ae27
   - enabled: 1
-    path: Assets/Scenes/EquationGame.unity
+    path: Assets/Scenes/MultiplyDivideGame.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/LinearMathGame.unity
+    path: Assets/Scenes/PlusMinusGame.unity
     guid: bd7d9785319fa4c4580f67c057398078
   m_configObjects: {}

@@ -7,9 +7,11 @@ public class PlayerMovement : MonoBehaviour
     private Math _mathScript;
     private Rigidbody2D rb;
 
-    private GameObject gameOver;
+    private GameObject gameWon;
+    private GameObject enemy;
 
     public event System.Action GameOver;
+    public event System.Action GameWon;
 
 
     // Start is called before the first frame update
@@ -20,7 +22,8 @@ public class PlayerMovement : MonoBehaviour
 
         rb = GetComponent<Rigidbody2D>();
 
-        gameOver = GameObject.FindGameObjectWithTag("GameOver");
+        enemy = GameObject.FindGameObjectWithTag("Enemy");
+        gameWon = GameObject.FindGameObjectWithTag("GameOver");
     }
 
     // Update is called once per frame
@@ -36,9 +39,21 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (gameOver != null)
+        if (gameWon != null)
         {
-            if (gameOver.CompareTag(other.tag))
+            if (gameWon.CompareTag(other.tag))
+            {
+                Debug.Log("Game is won");
+
+                GameWon?.Invoke();
+
+            }
+
+        }
+
+        if (enemy != null)
+        {
+            if (enemy.CompareTag(other.tag))
             {
                 Debug.Log("Game Over");
 
@@ -46,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
 
             }
         }
+        
     }
 
 
