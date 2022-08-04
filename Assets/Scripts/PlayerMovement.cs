@@ -24,6 +24,8 @@ public class PlayerMovement : MonoBehaviour
 
         enemy = GameObject.FindGameObjectWithTag("Enemy");
         gameWon = GameObject.FindGameObjectWithTag("GameOver");
+
+
     }
 
     // Update is called once per frame
@@ -44,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
             if (gameWon.CompareTag(other.tag))
             {
                 Debug.Log("Game is won");
-
+                
                 GameWon?.Invoke();
 
             }
@@ -56,7 +58,6 @@ public class PlayerMovement : MonoBehaviour
             if (enemy.CompareTag(other.tag))
             {
                 Debug.Log("Game Over");
-
                 GameOver?.Invoke();
 
             }

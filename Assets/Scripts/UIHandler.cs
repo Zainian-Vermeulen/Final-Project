@@ -43,9 +43,19 @@ public class UIHandler : MonoBehaviour
     private int questionsCorrect = 0,
     questionsIncorrect = 0;
 
+    [SerializeField]
+    private Animator _enemyAnimator;
+
+
+    
+    private GameObject l;
+
+    private bool isGameOver = false;
 
     private void Start()
     {
+        currentScene = SceneManager.GetActiveScene().buildIndex;
+
         PauseGame(false);
         _math = FindObjectOfType<Math>();
         _math.MathIncorrect += OnMathIncorrect;
@@ -55,7 +65,8 @@ public class UIHandler : MonoBehaviour
         _backgroundImg.gameObject.SetActive(false);
 
         _enemy = FindObjectOfType<Enemy>();
-
+        //_enemyAnimator = _enemy.GetComponentInChildren<Animator>();
+        _enemyAnimator = FindObjectOfType<Animator>();
         _gameOver.gameObject.SetActive(false);
 
         _playerLife1Img.gameObject.SetActive(true);
@@ -69,7 +80,12 @@ public class UIHandler : MonoBehaviour
             _playerMovement.GameOver += OnGameOver;
         }
         else
-            return;       
+            return;
+
+        
+         
+        
+
     }
 
     private void FixedUpdate()
@@ -81,14 +97,14 @@ public class UIHandler : MonoBehaviour
         else
             return;
 
-
-        
     }
 
     private void Update()
     {
         if (Input.GetKeyUp(KeyCode.Escape))
             OnMenuClick();
+
+         _enemyAnimator = FindObjectOfType<Animator>();
     }
 
     private void OnMathIncorrect()
@@ -148,9 +164,9 @@ public class UIHandler : MonoBehaviour
         if (currentScene == 1)
         {
             OnGameOver();
-        }   
+        }
     }
-
+    
     public void OnMenuClick()
     {
         _resumeBtn.gameObject.SetActive(true);
@@ -167,18 +183,25 @@ public class UIHandler : MonoBehaviour
 
     private void OnGameWon()
     {
-
-        _gameWon.text = "You Won!";
-        _gameOver.gameObject.SetActive(true);
-        PauseGame(true);
+        StartCoroutine(IWaitForAnim("Die", "Won"));
     }
 
     private void OnGameOver()
     {
-        _gameWon.text = "You Over!";
-        _gameOver.gameObject.SetActive(true);
-        PauseGame(true);
+        StartCoroutine(IWaitForAnim("Eat", "Over"));
     }
+
+
+    private IEnumerator IWaitForAnim(string x, string y)
+    {
+        _enemyAnimator.SetTrigger($"{x}Trigger");
+        yield return new WaitForSecondsRealtime(0.7f);
+        _gameWon.text = $"You {y}!";
+        _gameOver.gameObject.SetActive(true);
+        PauseGame(true); 
+    }
+
+
 
     public void OnRestartClick()
     {       

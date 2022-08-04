@@ -2558,12 +2558,24 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 979325812741037913, guid: fdcab252ced68e048803ebc75f670b99, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 4.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 979325812741037913, guid: fdcab252ced68e048803ebc75f670b99, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 979325812741037913, guid: fdcab252ced68e048803ebc75f670b99, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 4.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 979325812741037913, guid: fdcab252ced68e048803ebc75f670b99, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 17.46
+      value: 17.3
       objectReference: {fileID: 0}
     - target: {fileID: 979325812741037913, guid: fdcab252ced68e048803ebc75f670b99, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.54
+      value: 0.38
       objectReference: {fileID: 0}
     - target: {fileID: 979325812741037913, guid: fdcab252ced68e048803ebc75f670b99, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2601,8 +2613,56 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 8479443780915356059, guid: fdcab252ced68e048803ebc75f670b99, type: 3}
+      propertyPath: m_FlipX
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8479443780915356059, guid: fdcab252ced68e048803ebc75f670b99, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -4795363162621231457, guid: 6d7cd4f7505dc674c891ca8946cfd98b, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fdcab252ced68e048803ebc75f670b99, type: 3}
+--- !u!1 &1614640747 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8213153671696039642, guid: fdcab252ced68e048803ebc75f670b99, type: 3}
+  m_PrefabInstance: {fileID: 1614640746}
+  m_PrefabAsset: {fileID: 0}
+--- !u!111 &1614640748
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1614640747}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 8b362eb5fc8a0ae49b152c162d5540df, type: 2}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!95 &1614640749
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1614640747}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 17416659cc086114ba98756fe74c76f2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1632059498
 GameObject:
   m_ObjectHideFlags: 0
@@ -3051,6 +3111,7 @@ MonoBehaviour:
   _gameOver: {fileID: 1753558894}
   _gameWon: {fileID: 1755884610}
   _math: {fileID: 1408504509}
+  _enemyAnimator: {fileID: 1614640749}
 --- !u!1 &1753558894
 GameObject:
   m_ObjectHideFlags: 0

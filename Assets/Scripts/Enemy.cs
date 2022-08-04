@@ -14,7 +14,9 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private PrefabHandler prefabHandler;
 
-    //[SerializeField]
+    public GameObject _player;
+
+    [SerializeField]
     private GameObject gameOver;
 
     public event System.Action GameOver;
@@ -22,14 +24,24 @@ public class Enemy : MonoBehaviour
     private SceneManager sceneManager;
     private int currentScene;
 
+    [SerializeField]
+    private Animator _enemyAnimator;
+
+    
+
     private void Start()
     {
+
         currentScene = SceneManager.GetActiveScene().buildIndex;
+        _enemyAnimator = GetComponent<Animator>();
+
 
         if (currentScene == 2)
         {
             prefabHandler = FindObjectOfType<PrefabHandler>();
         }
+
+       
 
         gameOver = GameObject.FindGameObjectWithTag("GameOver");
        
@@ -38,17 +50,18 @@ public class Enemy : MonoBehaviour
 
     }
 
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         _bulletPrefab = GameObject.FindGameObjectWithTag("Bullet");
-
         
-
+        
 
         gameOver = GameObject.FindGameObjectWithTag("GameOver");
 
         if (gameOver.CompareTag(other.tag))
         {
+            _enemyAnimator.SetTrigger("EatTrigger");
             Debug.Log("Game Over");
          
             GameOver?.Invoke();
@@ -57,32 +70,29 @@ public class Enemy : MonoBehaviour
 
         if (_bulletPrefab != null)
         {
-            if (_bulletPrefab.CompareTag(other.tag)) 
-                targetHit?.Invoke();
-            
-        }
-            return;
+            if (_bulletPrefab.CompareTag(other.tag))
+            {
+                //_enemyAnimator.SetTrigger("DieTrigger");
 
-        
+                targetHit?.Invoke();
+            }            
+        }
+           return;      
     }
 
     private void Update()
     {
 
         ApplyMovement();
+
+        
     }
-
-    private void Awake()
-    {
-
-    }
-
-
 
     private void ApplyMovement()
     {
          currentScene = SceneManager.GetActiveScene().buildIndex;
         
+
         if (currentScene == 2)
         {
             rb.velocity = -transform.right * /*Time.deltaTime **/ 0.5f;

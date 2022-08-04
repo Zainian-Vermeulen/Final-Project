@@ -23,26 +23,22 @@ public class PrefabHandler : MonoBehaviour
     [SerializeField]
     private Transform _enemySpawnTransform;
 
+    [SerializeField]
+    private Animator _enemyAnimator;
+
 
     void Start()
     {
-        
-        Instantiate(_bulletPrefab, new Vector2(0.15f, 0.7f), Quaternion.Euler(0f, 0f, -90f));
+
+        Instantiate(_bulletPrefab, new Vector2(0.08f, 0.7f), Quaternion.Euler(0f, 0f, -90f));
         Instantiate(_enemyPrefab, _enemySpawnTransform);
-        // Instantiate(_enemyPrefab,  Vector2.zero, Quaternion.identity);
-        //Instantiate(_enemyPrefab, _enemySpawnTransform);
-        
-
-        // _hitTarget = FindObjectOfType<HitTarget>();
-
         FindObjects();
+       
+        _enemyAnimator = enemyInScene.GetComponent<Animator>();
+        
         _hitTarget.targetHit += DestroyPrefabs;
-
-        //enemyInScene = GameObject.FindGameObjectWithTag("Bullet");
-        //bulletInScene = GameObject.FindGameObjectWithTag("Enemy");
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         StartCoroutine(SpawnPrefabs());
@@ -50,28 +46,32 @@ public class PrefabHandler : MonoBehaviour
 
     private void DestroyPrefabs()
     {
-        Destroy(enemyInScene);
-        Destroy(bulletInScene);
-        isSpawnPrefabs = true;
+        StartCoroutine(IDestroyPrefabs());
+
     }
 
-
-
+    private IEnumerator IDestroyPrefabs()
+    {
+        _enemyAnimator.SetTrigger("DieTrigger");
+        
+        Destroy(bulletInScene);
+        yield return new WaitForSecondsRealtime(0.5f);
+        Destroy(enemyInScene);
+        isSpawnPrefabs = true;
+    }
 
     private IEnumerator SpawnPrefabs()
     {
         if (isSpawnPrefabs)
-        { 
+        {
             isSpawnPrefabs = false;
             yield return new WaitForSecondsRealtime(0.25f);
             Instantiate(_bulletPrefab, new Vector2(0.15f, 0.7f), Quaternion.Euler(0f, 0f, -90f));
-
-            // Instantiate(_enemyPrefab, new Vector2(0.0f, 0.0f), Quaternion.identity);
             Instantiate(_enemyPrefab, _enemySpawnTransform);
-
-
-            moveEnemy?.Invoke();
             FindObjects();
+
+            _enemyAnimator.Rebind();
+            moveEnemy?.Invoke();
         }
         else
             yield break; 
@@ -80,9 +80,9 @@ public class PrefabHandler : MonoBehaviour
     private void FindObjects()
     {
         _hitTarget = FindObjectOfType<Enemy>();
-        enemyInScene = GameObject.FindGameObjectWithTag("Bullet");
-        bulletInScene = GameObject.FindGameObjectWithTag("Enemy");
-
+        enemyInScene = GameObject.FindGameObjectWithTag("Enemy");
+        bulletInScene = GameObject.FindGameObjectWithTag("Bullet");
+        _enemyAnimator = enemyInScene.GetComponent<Animator>();
         _hitTarget.targetHit += DestroyPrefabs;
 
         
