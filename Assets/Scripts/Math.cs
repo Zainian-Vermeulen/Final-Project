@@ -216,6 +216,7 @@ public class Math : MonoBehaviour
         _mathText.text = $"{numx} {sign} {numy} = ";
         _mathInputText.text = "";
     }
+
     private void MathDifficult(Difficulty dif)
     {
         //Multiply | Divide
@@ -410,12 +411,6 @@ public class Math : MonoBehaviour
             score = playerFinalScore;
             PlayerPrefs.SetInt(playerScore, score);
         }
-
-        //if (playerHighScoreEasy <= playerFinalScore)
-        //{
-        //    playerHighScoreEasy = playerFinalScore;
-        //    PlayerPrefs.SetInt(playerScore, playerHighScoreEasy);
-        //}
     }
     private void InputFieldFocus()
     {

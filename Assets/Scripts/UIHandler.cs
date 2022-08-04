@@ -69,9 +69,13 @@ public class UIHandler : MonoBehaviour
         _enemyAnimator = FindObjectOfType<Animator>();
         _gameOver.gameObject.SetActive(false);
 
-        _playerLife1Img.gameObject.SetActive(true);
-        _playerLife2Img.gameObject.SetActive(true);
-        _playerLife3Img.gameObject.SetActive(true);
+        if (currentScene == 1)
+        {
+            _playerLife1Img.gameObject.SetActive(true);
+            _playerLife2Img.gameObject.SetActive(true);
+            _playerLife3Img.gameObject.SetActive(true);
+        }
+
 
         _playerMovement = FindObjectOfType<PlayerMovement>();
         if (_playerMovement != null)
