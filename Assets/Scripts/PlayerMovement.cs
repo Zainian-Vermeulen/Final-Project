@@ -12,7 +12,9 @@ public class PlayerMovement : MonoBehaviour
 
     public event System.Action GameOver;
     public event System.Action GameWon;
-
+    
+    private Animator _playerAnimator;
+    //make player anim like enemy
 
     // Start is called before the first frame update
     void Start()
