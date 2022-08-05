@@ -33,4 +33,25 @@ public class DoNotDestroyMusic : MonoBehaviour
         }
         DontDestroyOnLoad(this.gameObject);
     }
+
+
+    /*
+     * music:
+     * https://youtu.be/RLXr_miMxHU
+     * 
+     * game win:
+     * https://freesound.org/people/jobro/sounds/60444/
+     * 
+     * game loose:
+     * https://freesound.org/people/Jofae/sounds/364929/
+     * 
+     * monster die:
+     * https://freesound.org/people/vox_artist/sounds/513621/
+     * 
+     * shoot:
+     * https://freesound.org/people/igroglaz/sounds/593857/
+     * 
+     * click button:
+     * https://freesound.org/people/Snapper4298/sounds/183473/
+     */
 }
