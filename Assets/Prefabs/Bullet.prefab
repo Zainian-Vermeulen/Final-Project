@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.36862746, g: 0.5647059, b: 0.3529412, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -136,7 +136,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a3092cf9291a1146a11aa55def08b10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 8220440067236741845}
-  _mathScript: {fileID: 0}
+  _prefabHandler: {fileID: 0}
   _bulletPrefab: {fileID: 8220440067236741849}
-  _enemyPrefab: {fileID: 8213153671696039642, guid: fdcab252ced68e048803ebc75f670b99, type: 3}
+  _bullet: {fileID: 0}

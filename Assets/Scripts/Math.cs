@@ -149,7 +149,7 @@ public class Math : MonoBehaviour
             case MathOperator.Multiply:
                 {
                     sumEquation = num1 * num2;
-                    sign = "*";
+                    sign = "x";
                     Debug.Log("Sum is: " + sumEquation);
 
                     break;
@@ -228,7 +228,7 @@ public class Math : MonoBehaviour
                     {
                         Calculate(numx, numy, MathOperator.Multiply);
 
-                        sign = "*";
+                        sign = "x";
                         difFactor = 20;
                     }
                     break;
@@ -248,7 +248,7 @@ public class Math : MonoBehaviour
                         {
                             Calculate(numx, numy, MathOperator.Multiply);
 
-                            sign = "*";
+                            sign = "x";
                             difFactor = 50;
                         }
                         else if (numOp > 10 && numOp <= 20)
