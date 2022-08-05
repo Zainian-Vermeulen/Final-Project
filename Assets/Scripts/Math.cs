@@ -229,7 +229,7 @@ public class Math : MonoBehaviour
                         Calculate(numx, numy, MathOperator.Multiply);
 
                         sign = "x";
-                        difFactor = 20;
+                        difFactor = 50;
                     }
                     break;
 
@@ -245,7 +245,7 @@ public class Math : MonoBehaviour
                         Calculate(numx, numy, MathOperator.Divide);
 
                         sign = "/";
-                        difFactor = 20;
+                        difFactor = 50;
                     }
                     break;
 
@@ -256,7 +256,7 @@ public class Math : MonoBehaviour
                             Calculate(numx, numy, MathOperator.Multiply);
 
                             sign = "x";
-                            difFactor = 50;
+                            difFactor = 100;
                         }
                         else if (numOp > 10 && numOp <= 20)
                         {
@@ -270,7 +270,7 @@ public class Math : MonoBehaviour
 
                             Calculate(numx, numy, MathOperator.Divide);
                             sign = "/";
-                            difFactor = 50;
+                            difFactor = 100;
                         }          
                     }
                     break;
@@ -308,7 +308,7 @@ public class Math : MonoBehaviour
                             Calculate(numx, numy, MathOperator.Plus);
 
                             sign = "+";
-                            difFactor = 50;
+                            difFactor = 30;
                         }
                         else if (numOp > 10 && numOp <= 20)
                         {
@@ -316,7 +316,7 @@ public class Math : MonoBehaviour
                             Calculate(numx, numy, MathOperator.Minus);
 
                             sign = "-";
-                            difFactor = 50;
+                            difFactor = 30;
                         }
                     }
                     break;
