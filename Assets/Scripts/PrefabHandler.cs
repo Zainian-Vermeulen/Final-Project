@@ -37,6 +37,9 @@ public class PrefabHandler : MonoBehaviour
 
     public event System.Action shootRn;
 
+    [SerializeField]
+    private AudioSource _enemyDie;
+
     void Start()
     {
 
@@ -71,8 +74,8 @@ public class PrefabHandler : MonoBehaviour
 
     private IEnumerator IDestroyPrefabs()
     {
+        _enemyDie.Play();
         _enemyAnimator.SetTrigger("Die");
-
         Destroy(bulletInScene);
         yield return new WaitForSecondsRealtime(0.5f);
 

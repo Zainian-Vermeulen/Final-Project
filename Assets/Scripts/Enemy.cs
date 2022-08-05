@@ -60,12 +60,8 @@ public class Enemy : MonoBehaviour
         gameOver = GameObject.FindGameObjectWithTag("GameOver");
 
         if (gameOver.CompareTag(other.tag))
-        {
-            _enemyAnimator.SetTrigger("Eat");
-            Debug.Log("Game Over");
-         
-            GameOver?.Invoke();
-            
+        {        
+            GameOver?.Invoke();            
         }
 
         if (_bulletPrefab != null)

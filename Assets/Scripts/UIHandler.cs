@@ -53,6 +53,16 @@ public class UIHandler : MonoBehaviour
     private Animator _enemyAnimator;
 
     private bool isGameOver = false;
+    private bool isGameWon = false;
+
+    [SerializeField]
+    private AudioSource _winGame;
+
+    [SerializeField]
+    private AudioSource _loseGame;
+
+    [SerializeField]
+    private AudioSource _enemyDie;
 
     private void Start()
     {
@@ -70,7 +80,10 @@ public class UIHandler : MonoBehaviour
         //_enemyAnimator = _enemy.GetComponentInChildren<Animator>();
 
 
-        
+        if (_enemy == null)
+        {
+            return;
+        }
          
         
        // _enemyAnimator = FindObjectOfType<Animator>();
@@ -118,7 +131,13 @@ public class UIHandler : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Escape))
             OnMenuClick();
 
+        if (_enemy == null)
+        {
+            return;
+        }
+
         _enemyAnimator = _enemy.GetComponent<Animator>();
+
     }
 
     private void OnMathIncorrect()
@@ -201,21 +220,38 @@ public class UIHandler : MonoBehaviour
 
     private void OnGameWon()
     {
+        Debug.Log("Game won!");
+        isGameWon = true;
         StartCoroutine(IWaitForAnim("Die", "You Won!"));
     }
 
     private void OnGameOver()
     {
+        Debug.Log("Game lost!");
+
+        isGameWon = false;
         StartCoroutine(IWaitForAnim("Eat", "Game Over!"));
     }
 
 
     private IEnumerator IWaitForAnim(string x, string y)
     {
+        currentScene = SceneManager.GetActiveScene().buildIndex;
+
         _enemyAnimator.SetTrigger($"{x}");
+        _enemyDie.Play();
         yield return new WaitForSecondsRealtime(1.2f);
         _gameWon.text = $"{y}";
         _gameOver.gameObject.SetActive(true);
+
+        if (isGameWon)
+        {
+            _winGame.Play();
+
+        }
+        else
+            _loseGame.Play();
+
         PauseGame(true); 
     }
 
