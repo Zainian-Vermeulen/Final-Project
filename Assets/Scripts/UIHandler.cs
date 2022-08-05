@@ -161,8 +161,8 @@ public class UIHandler : MonoBehaviour
 
         if (questionsCorrect == maxQuestions)
         {
-           // _gameWon.text = "You Won!";
-            QuestionsGameOver();
+            // _gameWon.text = "You Won!";
+            OnGameWon();
 
         }
         Debug.Log("Questions correct is: " + questionsCorrect);
@@ -208,7 +208,7 @@ public class UIHandler : MonoBehaviour
     private IEnumerator IWaitForAnim(string x, string y)
     {
         _enemyAnimator.SetTrigger($"{x}");
-        yield return new WaitForSecondsRealtime(0.7f);
+        yield return new WaitForSecondsRealtime(2f);
         _gameWon.text = $"You {y}!";
         _gameOver.gameObject.SetActive(true);
         PauseGame(true); 
