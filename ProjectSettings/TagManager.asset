@@ -8,6 +8,7 @@ TagManager:
   - Bullet
   - Clone
   - GameOver
+  - GameMusic
   layers:
   - Default
   - TransparentFX
