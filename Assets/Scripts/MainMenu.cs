@@ -61,7 +61,11 @@ public class MainMenu : MonoBehaviour
 
     private string playerDif;
 
+    [SerializeField]
+    private AudioSource _click;
 
+    [SerializeField]
+    private AudioSource _clickBack;
 
 
     [SerializeField]
@@ -130,6 +134,13 @@ public class MainMenu : MonoBehaviour
         }
         else
             return;
+
+        if (_click == null)
+            return;
+
+        if (_clickBack == null)
+            return;
+
     }
    
     public void OnSelectGame()
@@ -138,11 +149,12 @@ public class MainMenu : MonoBehaviour
         _menu2.SetActive(true);
         _menu3.SetActive(false);
         _menu4.SetActive(false);
-
+        _click.Play();
     }
 
     public void OnBackClick()
     {
+        _clickBack.Play();
         if (_menu2.activeInHierarchy == true)
         {
             _menu1.SetActive(true);
@@ -169,7 +181,7 @@ public class MainMenu : MonoBehaviour
         _menu2.SetActive(false);
         _menu3.SetActive(true);
         _menu4.SetActive(false);
-
+        _click.Play();
     }
 
     public void OnLinearClick()
@@ -178,7 +190,7 @@ public class MainMenu : MonoBehaviour
         _menu2.SetActive(false);
         _menu3.SetActive(false);
         _menu4.SetActive(true);
-
+        _click.Play();
     }
 
     public void OnDifSelect(string difString)
@@ -208,18 +220,21 @@ public class MainMenu : MonoBehaviour
 
     public void OnDifSelectLoadEquations()
     {
+        _click.Play();
         currentScene = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadSceneAsync(currentScene + 1);
     }
 
     public void OnDifSelectLoadLinear()
     {
+        _click.Play();
         currentScene = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadSceneAsync(currentScene + 2);
     }
 
     public void QuitGame()
     {
+        _clickBack.Play();
         Debug.Log("Quiting game");
         Application.Quit();
     }

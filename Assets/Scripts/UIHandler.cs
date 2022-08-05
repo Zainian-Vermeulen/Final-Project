@@ -63,8 +63,13 @@ public class UIHandler : MonoBehaviour
 
     [SerializeField]
     private AudioSource _enemyDie;
+   
+    [SerializeField]
+    private AudioSource _click;
 
-    
+    [SerializeField]
+    private AudioSource _clickBack;
+
 
     private void Start()
     {
@@ -121,7 +126,12 @@ public class UIHandler : MonoBehaviour
         
         if (_loseGame == null)
             return;
- 
+
+        if (_click == null)
+            return;
+
+        if (_clickBack == null)
+            return;
     }
 
     private void FixedUpdate()
@@ -137,7 +147,7 @@ public class UIHandler : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Escape))
+        if (Input.GetKeyUp(KeyCode.Escape)) 
             OnMenuClick();
 
         if (_enemy == null)
@@ -215,6 +225,7 @@ public class UIHandler : MonoBehaviour
     
     public void OnMenuClick()
     {
+        _click.Play(); 
         _resumeBtn.gameObject.SetActive(true);
         _backgroundImg.gameObject.SetActive(true);
         PauseGame(true);
@@ -222,6 +233,7 @@ public class UIHandler : MonoBehaviour
 
     public void OnResumeClick()
     {
+        _clickBack.Play();
         _resumeBtn.gameObject.SetActive(false);
         _backgroundImg.gameObject.SetActive(false);
         PauseGame(false);
@@ -263,12 +275,14 @@ public class UIHandler : MonoBehaviour
     }
 
     public void OnRestartClick()
-    {       
+    {
+        _click.Play();
         SceneManager.LoadScene(currentScene);
     }
 
     public void OnMainMenuClick()
     {
+        _clickBack.Play();
         SceneManager.LoadScene(0);
         PauseGame(false);
     }
