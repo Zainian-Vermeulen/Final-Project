@@ -35,7 +35,7 @@ public class PrefabHandler : MonoBehaviour
 
     private int currentScene;
 
-    public event System.Action shootEvent;
+    public event System.Action shootRn;
 
     void Start()
     {
@@ -96,7 +96,8 @@ public class PrefabHandler : MonoBehaviour
                 _playerAnimator.SetTrigger("Attack");
                 yield return new WaitForSecondsRealtime(0.9f);
                 _playerAnimator.SetTrigger("Idle");
-                shootEvent?.Invoke();
+                shootRn?.Invoke();
+ 
             }
             else
                yield return null;
@@ -124,12 +125,11 @@ public class PrefabHandler : MonoBehaviour
 
     private void FindObjects()
     {
-        _hitTarget = FindObjectOfType<Enemy>();
-        enemyInScene = GameObject.FindGameObjectWithTag("Enemy");
         bulletInScene = GameObject.FindGameObjectWithTag("Bullet");
+        enemyInScene = GameObject.FindGameObjectWithTag("Enemy");
         _enemyAnimator = enemyInScene.GetComponent<Animator>();
-        _hitTarget.targetHit += DestroyPrefabs;
 
-        
+        _hitTarget = FindObjectOfType<Enemy>();
+        _hitTarget.targetHit += DestroyPrefabs;   
     }
 }

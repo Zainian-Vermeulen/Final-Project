@@ -35,13 +35,16 @@ public class UIHandler : MonoBehaviour
     [SerializeField]
     private TMP_Text _gameWon;
 
+    [SerializeField]
+    private TMP_Text _questions;
+
     private int currentScene;
 
     [SerializeField]
     private Math _math;
 
     private int questionsCorrect = 0,
-    questionsIncorrect = 0;
+    questionsIncorrect = 0, maxQuestions = 10;
 
     [SerializeField]
     private Animator _enemyAnimator;
@@ -151,10 +154,12 @@ public class UIHandler : MonoBehaviour
     private void OnMathCorrect()
     {
         questionsCorrect += 1;
-
         
+        if (_questions != null)
+            _questions.text = $"{questionsCorrect} / {maxQuestions}";
 
-        if (questionsCorrect == 10)
+
+        if (questionsCorrect == maxQuestions)
         {
            // _gameWon.text = "You Won!";
             QuestionsGameOver();
@@ -202,16 +207,12 @@ public class UIHandler : MonoBehaviour
 
     private IEnumerator IWaitForAnim(string x, string y)
     {
-        Debug.Log("Here");
-       // _enemyAnimator.SetTrigger("Eat");
         _enemyAnimator.SetTrigger($"{x}");
         yield return new WaitForSecondsRealtime(0.7f);
         _gameWon.text = $"You {y}!";
         _gameOver.gameObject.SetActive(true);
         PauseGame(true); 
     }
-
-
 
     public void OnRestartClick()
     {       
