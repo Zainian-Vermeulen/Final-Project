@@ -235,6 +235,13 @@ public class Math : MonoBehaviour
 
                 case Difficulty.Medium: // /
                     {
+                        int mod = numx % numy;
+                        if (mod > 0)
+                        {
+                            Numbers(1, 11, 1, 11);
+                            return;
+                        }
+
                         Calculate(numx, numy, MathOperator.Divide);
 
                         sign = "/";
