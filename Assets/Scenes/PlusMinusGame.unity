@@ -158,8 +158,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.000000052981907, y: 0}
-  m_Size: {x: 0.55555546, y: 2}
+  m_Offset: {x: 0.0031820934, y: 0.49585155}
+  m_Size: {x: 0.30735123, y: 2.2389088}
   m_Direction: 0
 --- !u!114 &72331454
 MonoBehaviour:
@@ -173,6 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd6513b35a5dbcc4ea68627f4c073784, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerAnimator: {fileID: 0}
 --- !u!50 &72331455
 Rigidbody2D:
   serializedVersion: 4
@@ -2781,6 +2782,22 @@ PrefabInstance:
     - target: {fileID: 979325812741037913, guid: fdcab252ced68e048803ebc75f670b99, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3583724148349031553, guid: fdcab252ced68e048803ebc75f670b99, type: 3}
+      propertyPath: m_Size.x
+      value: 0.59023434
+      objectReference: {fileID: 0}
+    - target: {fileID: 3583724148349031553, guid: fdcab252ced68e048803ebc75f670b99, type: 3}
+      propertyPath: m_Size.y
+      value: 1.3128229
+      objectReference: {fileID: 0}
+    - target: {fileID: 3583724148349031553, guid: fdcab252ced68e048803ebc75f670b99, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.09363333
+      objectReference: {fileID: 0}
+    - target: {fileID: 3583724148349031553, guid: fdcab252ced68e048803ebc75f670b99, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.057874955
       objectReference: {fileID: 0}
     - target: {fileID: 8213153671696039642, guid: fdcab252ced68e048803ebc75f670b99, type: 3}
       propertyPath: m_Name

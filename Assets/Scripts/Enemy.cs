@@ -61,7 +61,7 @@ public class Enemy : MonoBehaviour
 
         if (gameOver.CompareTag(other.tag))
         {
-            _enemyAnimator.SetTrigger("EatTrigger");
+            _enemyAnimator.SetTrigger("Eat");
             Debug.Log("Game Over");
          
             GameOver?.Invoke();
@@ -72,7 +72,7 @@ public class Enemy : MonoBehaviour
         {
             if (_bulletPrefab.CompareTag(other.tag))
             {
-                //_enemyAnimator.SetTrigger("DieTrigger");
+                //_enemyAnimator.SetTrigger("Die");
 
                 targetHit?.Invoke();
             }            

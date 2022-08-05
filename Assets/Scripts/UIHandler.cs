@@ -46,8 +46,9 @@ public class UIHandler : MonoBehaviour
     [SerializeField]
     private Animator _enemyAnimator;
 
+   
 
-    
+
     private GameObject l;
 
     private bool isGameOver = false;
@@ -67,6 +68,7 @@ public class UIHandler : MonoBehaviour
         _enemy = FindObjectOfType<Enemy>();
         //_enemyAnimator = _enemy.GetComponentInChildren<Animator>();
         _enemyAnimator = FindObjectOfType<Animator>();
+       
         _gameOver.gameObject.SetActive(false);
 
         if (currentScene == 1)
@@ -149,6 +151,9 @@ public class UIHandler : MonoBehaviour
     private void OnMathCorrect()
     {
         questionsCorrect += 1;
+
+        
+
         if (questionsCorrect == 10)
         {
            // _gameWon.text = "You Won!";
@@ -156,11 +161,10 @@ public class UIHandler : MonoBehaviour
 
         }
         Debug.Log("Questions correct is: " + questionsCorrect);
-
+        
     }
 
    
-
     private void QuestionsGameOver()
     {
         //_gameWon.text = "Game Over!";
@@ -198,7 +202,9 @@ public class UIHandler : MonoBehaviour
 
     private IEnumerator IWaitForAnim(string x, string y)
     {
-        _enemyAnimator.SetTrigger($"{x}Trigger");
+        Debug.Log("Here");
+       // _enemyAnimator.SetTrigger("Eat");
+        _enemyAnimator.SetTrigger($"{x}");
         yield return new WaitForSecondsRealtime(0.7f);
         _gameWon.text = $"You {y}!";
         _gameOver.gameObject.SetActive(true);

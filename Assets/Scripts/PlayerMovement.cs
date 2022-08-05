@@ -12,7 +12,8 @@ public class PlayerMovement : MonoBehaviour
 
     public event System.Action GameOver;
     public event System.Action GameWon;
-    
+
+    [SerializeField]
     private Animator _playerAnimator;
     //make player anim like enemy
 
@@ -23,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
         _mathScript.MathCorrect += StartMovingPlayer;
 
         rb = GetComponent<Rigidbody2D>();
-
+        _playerAnimator = GetComponent<Animator>();
         enemy = GameObject.FindGameObjectWithTag("Enemy");
         gameWon = GameObject.FindGameObjectWithTag("GameOver");
 
@@ -70,8 +71,10 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator MovePlayer()
     {
+        _playerAnimator.SetTrigger("Running");
         rb.velocity = -transform.right * /*Time.deltaTime **/ 0.9f;
-        yield return new WaitForSecondsRealtime(0.9f);
+        _playerAnimator.SetTrigger("Idle");
+        yield return new WaitForSecondsRealtime(1.2f);
         rb.velocity = -transform.right * 0;
         Debug.Log("Player moving now");
     }
