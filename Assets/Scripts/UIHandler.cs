@@ -33,6 +33,9 @@ public class UIHandler : MonoBehaviour
     private GameObject _gameOver;
 
     [SerializeField]
+    private GameObject _enemyGO;
+
+    [SerializeField]
     private TMP_Text _gameWon;
 
     [SerializeField]
@@ -48,11 +51,6 @@ public class UIHandler : MonoBehaviour
 
     [SerializeField]
     private Animator _enemyAnimator;
-
-   
-
-
-    private GameObject l;
 
     private bool isGameOver = false;
 
@@ -70,7 +68,14 @@ public class UIHandler : MonoBehaviour
 
         _enemy = FindObjectOfType<Enemy>();
         //_enemyAnimator = _enemy.GetComponentInChildren<Animator>();
-        _enemyAnimator = FindObjectOfType<Animator>();
+
+
+        
+         
+        
+       // _enemyAnimator = FindObjectOfType<Animator>();
+       //_enemyAnimator = _enemyGO.GetComponent<Animator>();
+        _enemyAnimator = _enemy.GetComponent<Animator>();
        
         _gameOver.gameObject.SetActive(false);
 
@@ -113,7 +118,7 @@ public class UIHandler : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Escape))
             OnMenuClick();
 
-         _enemyAnimator = FindObjectOfType<Animator>();
+        _enemyAnimator = _enemy.GetComponent<Animator>();
     }
 
     private void OnMathIncorrect()
@@ -196,20 +201,20 @@ public class UIHandler : MonoBehaviour
 
     private void OnGameWon()
     {
-        StartCoroutine(IWaitForAnim("Die", "Won"));
+        StartCoroutine(IWaitForAnim("Die", "You Won!"));
     }
 
     private void OnGameOver()
     {
-        StartCoroutine(IWaitForAnim("Eat", "Over"));
+        StartCoroutine(IWaitForAnim("Eat", "Game Over!"));
     }
 
 
     private IEnumerator IWaitForAnim(string x, string y)
     {
         _enemyAnimator.SetTrigger($"{x}");
-        yield return new WaitForSecondsRealtime(2f);
-        _gameWon.text = $"You {y}!";
+        yield return new WaitForSecondsRealtime(1.2f);
+        _gameWon.text = $"{y}";
         _gameOver.gameObject.SetActive(true);
         PauseGame(true); 
     }
