@@ -64,6 +64,8 @@ public class UIHandler : MonoBehaviour
     [SerializeField]
     private AudioSource _enemyDie;
 
+    
+
     private void Start()
     {
         currentScene = SceneManager.GetActiveScene().buildIndex;
@@ -109,10 +111,17 @@ public class UIHandler : MonoBehaviour
         else
             return;
 
-        
-         
-        
 
+
+        if (_winGame == null)
+            return;
+
+        if (_enemyDie == null)
+            return;
+        
+        if (_loseGame == null)
+            return;
+ 
     }
 
     private void FixedUpdate()
@@ -181,7 +190,7 @@ public class UIHandler : MonoBehaviour
         
         if (_questions != null)
             _questions.text = $"{questionsCorrect} / {maxQuestions}";
-
+        
 
         if (questionsCorrect == maxQuestions)
         {
@@ -222,6 +231,7 @@ public class UIHandler : MonoBehaviour
     {
         Debug.Log("Game won!");
         isGameWon = true;
+        _enemyDie.Play();
         StartCoroutine(IWaitForAnim("Die", "You Won!"));
     }
 
@@ -236,10 +246,7 @@ public class UIHandler : MonoBehaviour
 
     private IEnumerator IWaitForAnim(string x, string y)
     {
-        currentScene = SceneManager.GetActiveScene().buildIndex;
-
         _enemyAnimator.SetTrigger($"{x}");
-        _enemyDie.Play();
         yield return new WaitForSecondsRealtime(1.2f);
         _gameWon.text = $"{y}";
         _gameOver.gameObject.SetActive(true);

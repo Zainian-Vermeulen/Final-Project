@@ -40,8 +40,13 @@ public class PrefabHandler : MonoBehaviour
     [SerializeField]
     private AudioSource _enemyDie;
 
+    [SerializeField]
+    private AudioSource _shoot;
+
     void Start()
     {
+
+        
 
         currentScene = SceneManager.GetActiveScene().buildIndex;
 
@@ -57,7 +62,11 @@ public class PrefabHandler : MonoBehaviour
         _mathCorrect.MathCorrect += PlayerAnim;
         _hitTarget.targetHit += DestroyPrefabs;
 
-        
+        if (_shoot == null)
+            return;
+
+        if (_enemyDie == null)
+            return;
 
     }
 
@@ -97,8 +106,10 @@ public class PrefabHandler : MonoBehaviour
             if (_playerAnimator != null)
             {
                 _playerAnimator.SetTrigger("Attack");
+                
                 yield return new WaitForSecondsRealtime(0.9f);
                 _playerAnimator.SetTrigger("Idle");
+                _shoot.Play();
                 shootRn?.Invoke();
  
             }
