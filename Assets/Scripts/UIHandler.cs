@@ -25,7 +25,7 @@ public class UIHandler : MonoBehaviour
     //[SerializeField]
     private Enemy _enemy;
 
-    private PlayerMovement _playerMovement;
+    private Player _playerMovement;
 
     [SerializeField]
     private GameObject _gameOver;
@@ -110,7 +110,7 @@ public class UIHandler : MonoBehaviour
         }
 
 
-        _playerMovement = FindObjectOfType<PlayerMovement>();
+        _playerMovement = FindObjectOfType<Player>();
         if (_playerMovement != null)
         {
             _playerMovement.GameWon += OnGameWon;
