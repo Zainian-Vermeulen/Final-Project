@@ -9,12 +9,6 @@ using UnityEngine.SceneManagement;
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
-    private PrefabHandler prefabHandler;
-
-    [SerializeField]
-    private Animator _enemyAnimator;
-
-    [SerializeField]
     private GameObject gameOver;
 
     public GameObject _bulletPrefab;
@@ -26,36 +20,31 @@ public class Enemy : MonoBehaviour
     private Rigidbody2D rb;
     private int currentScene;
 
+    private float speed;
+
     private void Start()
     {
-
         currentScene = SceneManager.GetActiveScene().buildIndex;
-        _enemyAnimator = GetComponent<Animator>();
 
-
-        if (currentScene == 2) {
-            prefabHandler = FindObjectOfType<PrefabHandler>();
-        }
-     
         gameOver = GameObject.FindGameObjectWithTag("GameOver");
        
         rb = GetComponent<Rigidbody2D>();
-        rb.velocity = transform.up * 15f;
+        
+        ApplyMovement();
     }
 
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         _bulletPrefab = GameObject.FindGameObjectWithTag("Bullet");
-
         gameOver = GameObject.FindGameObjectWithTag("GameOver");
 
-        if (gameOver.CompareTag(other.tag)){        
+        if (gameOver.CompareTag(other.tag)) {        
             GameOver?.Invoke();            
         }
 
-        if (_bulletPrefab != null){
-            if (_bulletPrefab.CompareTag(other.tag)){
+        if (_bulletPrefab != null) {
+            if (_bulletPrefab.CompareTag(other.tag)) {
                 targetHit?.Invoke();
             }            
         }
@@ -71,14 +60,14 @@ public class Enemy : MonoBehaviour
     private void ApplyMovement()
     {
          currentScene = SceneManager.GetActiveScene().buildIndex;
-        
 
-        if (currentScene == 2)
-        {
-            rb.velocity = -transform.right * 0.5f;
+        if (currentScene == 2) {
+            speed = 0.5f;
         }
-        else  
-        rb.velocity = -transform.right * 2f;
-    }
+        else {
+            speed = 2.0f;
+        }
 
+        rb.velocity = -transform.right * speed;
+    }
 }
