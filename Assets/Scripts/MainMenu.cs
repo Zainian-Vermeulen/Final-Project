@@ -49,59 +49,19 @@ public class MainMenu : MonoBehaviour
         _menu4.SetActive(false);
 
         #region Multiply | Devide
+        SetHighScores(_playerHighScoreEasyEquations, playerHighScoreEasyEquations, "Equations_Easy");
+        
+        SetHighScores(_playerHighScoreMediumEquations, playerHighScoreMediumEquations, "Equations_Medium");
 
-        if (_playerHighScoreEasyEquations != null)
-        {
-            playerHighScoreEasyEquations = PlayerPrefs.GetInt("HighScore_Equations_Easy", 0);
-            _playerHighScoreEasyEquations.text = $"High score is: {playerHighScoreEasyEquations}";
-        }
-        else
-            return;
-
-        if (_playerHighScoreMediumEquations != null)
-        {
-            playerHighScoreMediumEquations = PlayerPrefs.GetInt("HighScore_Equations_Medium", 0);
-            _playerHighScoreMediumEquations.text = $"High score is: {playerHighScoreMediumEquations}";
-        }
-        else
-            return;
-
-        if (_playerHighScoreHardEquations != null)
-        {
-            playerHighScoreHardEquations = PlayerPrefs.GetInt("HighScore_Equations_Hard", 0);
-            _playerHighScoreHardEquations.text = $"High score is: {playerHighScoreHardEquations}";
-        }
-        else
-            return;
-
+        SetHighScores(_playerHighScoreHardEquations, playerHighScoreHardEquations, "Equations_Hard");
         #endregion
 
         #region Plus | Minus
-
-        if (_playerHighScoreEasyLinear != null)
-        {
-            playerHighScoreEasyLinear = PlayerPrefs.GetInt("HighScore_Linear_Easy", 0);
-            _playerHighScoreEasyLinear.text = $"High score is: {playerHighScoreEasyLinear}";
-        }
-        else
-            return;
-
-        if (_playerHighScoreMediumLinear != null)
-        {
-            playerHighScoreMediumLinear = PlayerPrefs.GetInt("HighScore_Linear_Medium", 0);
-            _playerHighScoreMediumLinear.text = $"High score is: {playerHighScoreMediumLinear}";
-        }
-        else
-            return;
-
-        if (_playerHighScoreHardLinear != null)
-        {
-            playerHighScoreHardLinear = PlayerPrefs.GetInt("HighScore_Linear_Hard", 0);
-            _playerHighScoreHardLinear.text = $"High score is: {playerHighScoreHardLinear}";
-        }
-        else
-            return;
-
+        SetHighScores(_playerHighScoreEasyLinear, playerHighScoreEasyLinear, "Linear_Easy");
+        
+        SetHighScores(_playerHighScoreMediumLinear, playerHighScoreMediumLinear, "Linear_Medium");
+        
+        SetHighScores(_playerHighScoreHardLinear, playerHighScoreHardLinear, "Linear_Hard");
         #endregion
 
         if (_click == null)
@@ -111,14 +71,23 @@ public class MainMenu : MonoBehaviour
             return;
 
     }
+
+    private void SetHighScores(TMP_Text text, int difInt, string difString)
+    {
+        if (text != null) {
+            difInt = PlayerPrefs.GetInt($"HighScore_{difString}", 0);
+            text.text = $"High score is: {difInt}";
+        }
+        else
+            return;
+    }
    
     //Sets 2nd menu active
     public void OnSelectGame()
     {
         _menu1.SetActive(false);
         _menu2.SetActive(true);
-        _menu3.SetActive(false);
-        _menu4.SetActive(false);
+
         _click.Play();
     }
 
@@ -127,19 +96,17 @@ public class MainMenu : MonoBehaviour
     public void OnBackClick()
     {
         _clickBack.Play();
-        if (_menu2.activeInHierarchy == true)
-        {
+
+        if (_menu2.activeInHierarchy == true) {
             _menu1.SetActive(true);
             _menu2.SetActive(false);
         }
-        else if (_menu3.activeInHierarchy == true)
-        {
+        else if (_menu3.activeInHierarchy == true) {
             _menu2.SetActive(true);
             _menu3.SetActive(false);
 
         }
-        else if (_menu4.activeInHierarchy == true)
-        {
+        else if (_menu4.activeInHierarchy == true) {
             _menu2.SetActive(true);
             _menu4.SetActive(false);
         }
@@ -150,17 +117,14 @@ public class MainMenu : MonoBehaviour
     //Multiply | Devide menu activated
     public void OnEquationClick()
     {
-        _menu1.SetActive(false);
         _menu2.SetActive(false);
         _menu3.SetActive(true);
-        _menu4.SetActive(false);
         _click.Play();
     }
 
     //Plus | Minus menu activated
     public void OnLinearClick()
     {
-        _menu1.SetActive(false);
         _menu2.SetActive(false);
         _menu3.SetActive(false);
         _menu4.SetActive(true);
@@ -176,8 +140,7 @@ public class MainMenu : MonoBehaviour
     //E = Plus | M = Minus | H = Random between E and M
     public void OnDifSelect(string difString)
     {
-        switch (difString)
-        {
+        switch (difString) {
             case "E":
                 {
                     PlayerPrefs.SetString("PlayerDifficulty", "E");
