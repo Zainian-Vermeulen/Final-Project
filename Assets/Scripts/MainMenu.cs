@@ -49,19 +49,19 @@ public class MainMenu : MonoBehaviour
         _menu4.SetActive(false);
 
         #region Multiply | Devide
-        SetHighScores(_playerHighScoreEasyEquations, playerHighScoreEasyEquations, "Equations_Easy");
+        GetHighScores(_playerHighScoreEasyEquations, playerHighScoreEasyEquations, "Equations_Easy");
         
-        SetHighScores(_playerHighScoreMediumEquations, playerHighScoreMediumEquations, "Equations_Medium");
+        GetHighScores(_playerHighScoreMediumEquations, playerHighScoreMediumEquations, "Equations_Medium");
 
-        SetHighScores(_playerHighScoreHardEquations, playerHighScoreHardEquations, "Equations_Hard");
+        GetHighScores(_playerHighScoreHardEquations, playerHighScoreHardEquations, "Equations_Hard");
         #endregion
 
         #region Plus | Minus
-        SetHighScores(_playerHighScoreEasyLinear, playerHighScoreEasyLinear, "Linear_Easy");
+        GetHighScores(_playerHighScoreEasyLinear, playerHighScoreEasyLinear, "Linear_Easy");
         
-        SetHighScores(_playerHighScoreMediumLinear, playerHighScoreMediumLinear, "Linear_Medium");
+        GetHighScores(_playerHighScoreMediumLinear, playerHighScoreMediumLinear, "Linear_Medium");
         
-        SetHighScores(_playerHighScoreHardLinear, playerHighScoreHardLinear, "Linear_Hard");
+        GetHighScores(_playerHighScoreHardLinear, playerHighScoreHardLinear, "Linear_Hard");
         #endregion
 
         if (_click == null)
@@ -72,7 +72,7 @@ public class MainMenu : MonoBehaviour
 
     }
 
-    private void SetHighScores(TMP_Text text, int difInt, string difString)
+    private void GetHighScores(TMP_Text text, int difInt, string difString)
     {
         if (text != null) {
             difInt = PlayerPrefs.GetInt($"HighScore_{difString}", 0);

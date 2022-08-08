@@ -7,6 +7,10 @@ using System;
 using Random = UnityEngine.Random;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// This script handles the math in each of the games.
+/// It also sets the highscores of the player after winning / losing
+/// </summary>
 
 public class Math : MonoBehaviour
 {
@@ -15,52 +19,35 @@ public class Math : MonoBehaviour
     private TMP_InputField _mathInputText;
 
     [SerializeField]
-    private TMP_Text _mathInputTextPaceHolder;
-
-    [SerializeField]
-    private TMP_Text _mathText;
-
-    [SerializeField]
-    private TMP_Text _playerScore;
-
-    [SerializeField]
-    private TMP_Text _playerFinalScore;
-
-    public double sumEquation = 0.0;
-    private int numx, numy, numz, numOp;
-    public string sign;
-
-    public event System.Action shootEvent;
+    private TMP_Text _mathInputTextPaceHolder, _mathText, _playerScore, _playerFinalScore;
 
     [SerializeField]
     private int playerCurrentScore = 0;
-    private int playerFinalScore = 0;
-    public int playerHighScoreEasy, playerHighScoreMedium, playerHighScoreHard;
-    private int difFactor = 0;
 
-    public event System.Action MathIncorrect;
-    public event System.Action MathCorrect;
+    public event System.Action shootEvent, MathIncorrect, MathCorrect;
 
+    private double sumEquation = 0.0f;
+    
+    public string sign;
     private string playerDif;
 
-    private int currentScene;
-
+    public int playerHighScoreEasy, playerHighScoreMedium, playerHighScoreHard;
+    private int numx, numy, numz, numOp, currentScene, playerFinalScore = 0, difFactor = 0;
 
     private void Start()
     {
-        playerDif = PlayerPrefs.GetString("PlayerDifficulty");
-        _playerScore.text = $"Score: 0";
-        _playerFinalScore.text = $"Final score is: 0";
-
-        playerFinalScore = playerCurrentScore;
-        _playerScore.text = $"Score: {playerCurrentScore}";
-
-        //playerHighScore = PlayerPrefs.GetInt("HighScore_Equations", 0);
-
         currentScene = SceneManager.GetActiveScene().buildIndex;
-        Debug.Log("Current scene is: " + currentScene);
+       
+        playerDif = PlayerPrefs.GetString("PlayerDifficulty");
+
+        _playerScore.text = $"Score: {playerCurrentScore}";
+        
+        _playerFinalScore.text = $"Final score is: 0";
+        playerFinalScore = playerCurrentScore;
+
         Numbers(1,11,1,11);
 
+        #region Multiply | Devide
         if (currentScene == 1)
         {
             Debug.Log("Current scene is equations");
@@ -79,9 +66,10 @@ public class Math : MonoBehaviour
                     break;
             }
         }
+        #endregion
+        #region Plus | Minus
         else if (currentScene == 2)
         {
-            Debug.Log("current scene is linear");
 
             switch (playerDif)
             {
@@ -98,8 +86,10 @@ public class Math : MonoBehaviour
                     break;
             }
         }
+        #endregion
     }
-
+    
+    //Makes sure there can only be integers in the inputfield.
     private void Awake()
     {
         _mathInputText.characterValidation = TMP_InputField.CharacterValidation.Integer;
@@ -114,7 +104,7 @@ public class Math : MonoBehaviour
         }
     }
 
-
+    //Enum for the diffcent math operators
     public enum MathOperator
     {
         Plus,
@@ -122,33 +112,31 @@ public class Math : MonoBehaviour
         Multiply,
         Divide
     }
-    
+
+    //Enum for the different difficulties
     public enum Difficulty
     {
-        Easy,
-        Medium, 
-        Hard
+        Easy, // Multiply or Plus
+        Medium, // Devide or Minus
+        Hard //Random
     }
 
+    //Method for the answer to the equations
     public void Calculate(int num1, int num2, MathOperator op)
     {
-        switch (op)
-        {
+        switch (op) {
+
             case MathOperator.Plus :
                 {
                     sumEquation =  num1 + num2;
                     sign = "+";
-                    Debug.Log("Sum is: " + sumEquation);
                     break;
-
                 }
 
             case MathOperator.Minus:
                 {
                     sumEquation = num1 - num2;
                     sign = "-";
-                    Debug.Log("Sum is: " + sumEquation);
-
                     break;
                 }
 
@@ -156,8 +144,6 @@ public class Math : MonoBehaviour
                 {
                     sumEquation = num1 * num2;
                     sign = "x";
-                    Debug.Log("Sum is: " + sumEquation);
-
                     break;
                 }
 
@@ -165,7 +151,6 @@ public class Math : MonoBehaviour
                 {
                     sumEquation = num1 / num2;
                     sign = "/";
-                    Debug.Log("Sum is: " + sumEquation);
                     break;
                 }
 
@@ -174,22 +159,23 @@ public class Math : MonoBehaviour
         }
     }
 
+    //Method for deciding the numbers in the equations at random
+    //The x and y have nothing to do with vectors, only a name
     private void Numbers(int numXMin, int numXMax, int numYMin, int numYMax)
     {
         numx = Random.Range(numXMin, numXMax);
         numy = Random.Range(numYMin, numYMax);
         numOp = Random.Range(0, 20);
 
-        //ensures no negative numbers
-        if (numx < numy)
-        {
+        //ensures no negative numbers are used
+        if (numx < numy) {
             numz = numx;
             numx = numy;
             numy = numz;
         }
 
-        switch (playerDif)
-        {
+        switch (playerDif) {
+
             case "E":
                 {
                     MathDifficult(Difficulty.Easy);
@@ -207,30 +193,24 @@ public class Math : MonoBehaviour
                     MathDifficult(Difficulty.Hard);
                 }
                 break;
-
-            case "":
-                {
-                    MathDifficult(Difficulty.Hard);
-                }
-                break;
             
             default:
                 break;
         }
 
-        Debug.Log("Difficulty is: " + playerDif);
         _mathText.text = $"{numx} {sign} {numy} = ";
         _mathInputText.text = "";
     }
 
+    //Method for what to actually do when the difficulty has been selected
     private void MathDifficult(Difficulty dif)
     {
-        //Multiply | Divide
+        #region Multiply | Devide
         if (currentScene == 1)
         {
             switch (dif)
             {
-                case Difficulty.Easy: // *
+                case Difficulty.Easy: // Multiply
                     {
                         Calculate(numx, numy, MathOperator.Multiply);
 
@@ -239,7 +219,7 @@ public class Math : MonoBehaviour
                     }
                     break;
 
-                case Difficulty.Medium: // /
+                case Difficulty.Medium: // Devide
                     {
                         int mod = numx % numy;
                         if (mod > 0)
@@ -255,7 +235,7 @@ public class Math : MonoBehaviour
                     }
                     break;
 
-                case Difficulty.Hard: // * or /
+                case Difficulty.Hard: // Multiply or Devide
                     {
                         if(numOp <= 10)
                         {
@@ -285,12 +265,14 @@ public class Math : MonoBehaviour
                     break;
             }
         }
+        #endregion
+        #region Plus | Minus
         else if (currentScene == 2) //Plus | minus
         {
             switch (dif)
             {
 
-                case Difficulty.Easy: // +
+                case Difficulty.Easy: // Plus
                     {
                         Calculate(numx, numy, MathOperator.Plus);
 
@@ -298,7 +280,7 @@ public class Math : MonoBehaviour
                         difFactor = 20;
                     }
                     break;
-                case Difficulty.Medium: // -
+                case Difficulty.Medium: // minus
                     {
                         Calculate(numx, numy, MathOperator.Minus);
 
@@ -306,7 +288,7 @@ public class Math : MonoBehaviour
                         difFactor = 20;
                     }
                     break;
-                case Difficulty.Hard: // + or -
+                case Difficulty.Hard: //Plus or minus
                     {
                         if (numOp <= 10)
                         {
@@ -330,88 +312,83 @@ public class Math : MonoBehaviour
                     break;
             }           
         }
+        #endregion
     }
- 
+
+    //This method checks the math of the player compared to the equation answer
     public void OnMathClick()
     {
         int i;
         int playerNumber = 0;
-        bool result = int.TryParse(_mathInputText.text, out i);
+        bool result = int.TryParse(_mathInputText.text, out i); //Tries to parse the answer of the player
 
-        if (result)
-        {
+        if (result) {
             playerNumber = int.Parse(_mathInputText.text);
             _playerScore.text = $"Score: {playerCurrentScore}";
             _playerFinalScore.text = $"Final score is: {playerFinalScore}";
         }
-        else if (!result)
-        {
+        else if (!result) {
             InputFieldFocus();
             _mathInputTextPaceHolder.text = "Only numbers are allowed.";
             return;
         }
 
-
-        if (playerNumber != sumEquation)
-        {
-            Debug.Log("Wrong Answer");
+        if (playerNumber != sumEquation) {
             _mathInputText.text = "";
+           
             InputFieldFocus();
             _mathInputTextPaceHolder.text = "Try Again.";
-            _playerFinalScore.text = $"Final score is: 0";
+           
             _playerScore.text = $"Score: {playerCurrentScore}";
             _playerFinalScore.text = $"Final score is: {playerFinalScore}";
 
             MathIncorrect?.Invoke();
 
-            return;
-           
+            return;           
         }       
         else if (playerNumber == sumEquation)
         {
             Numbers(1,11,1,11);
+           
             InputFieldFocus();
             _mathInputTextPaceHolder.text = "Type here.";
+           
             playerCurrentScore += difFactor;
             playerFinalScore = playerCurrentScore;              
+           
             _playerScore.text = $"Score: {playerCurrentScore}";
             _playerFinalScore.text = $"Final score is: {playerFinalScore}";
             
-
             shootEvent?.Invoke();
             MathCorrect?.Invoke();
 
 
-            if (currentScene == 1)
-            {
-                switch (playerDif)
-                {
+            if (currentScene == 1) {
+                switch (playerDif) {
 
                     case "E":
-                        PlayerHighScore("HighScore_Equations_Easy", playerHighScoreEasy);
+                        SetPlayerHighScore("HighScore_Equations_Easy", playerHighScoreEasy);
                         break;
                     case "M":
-                        PlayerHighScore("HighScore_Equations_Medium", playerHighScoreMedium);
+                        SetPlayerHighScore("HighScore_Equations_Medium", playerHighScoreMedium);
                         break;
                     case "H":
-                        PlayerHighScore("HighScore_Equations_Hard", playerHighScoreHard);
+                        SetPlayerHighScore("HighScore_Equations_Hard", playerHighScoreHard);
                         break;
                     default:
                         break;
                 }
             }
-            else if (currentScene == 2)
-            {
-                switch (playerDif)
-                {
+            else if (currentScene == 2) {
+                switch (playerDif) {
                     case "E":
-                        PlayerHighScore("HighScore_Linear_Easy", playerHighScoreEasy);
+                        SetPlayerHighScore("HighScore_Linear_Easy", playerHighScoreEasy);
                         break;
                     case "M":
-                        PlayerHighScore("HighScore_Linear_Medium", playerHighScoreMedium);
+                        SetPlayerHighScore("HighScore_Linear_Medium", playerHighScoreMedium);
                         break;
                     case "H":
-                        PlayerHighScore("HighScore_Linear_Hard", playerHighScoreHard);
+                        SetPlayerHighScore("HighScore_Linear_Hard", playerHighScoreHard);
                         break;
                     default:
                         break;
@@ -420,7 +397,8 @@ public class Math : MonoBehaviour
         }
     }
 
-    private void PlayerHighScore(string playerScore, int score)
+    //Method to set the player's highscores
+    private void SetPlayerHighScore(string playerScore, int score)
     {
         if (score <= playerFinalScore)
         {
@@ -428,10 +406,11 @@ public class Math : MonoBehaviour
             PlayerPrefs.SetInt(playerScore, score);
         }
     }
+
+    //Method to focus the cursor on the input field
     private void InputFieldFocus()
     {
         _mathInputText.Select();
         _mathInputText.ActivateInputField();
     }
-
 }
