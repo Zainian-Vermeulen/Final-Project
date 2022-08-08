@@ -4,115 +4,75 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
-
+/// <summary>
+/// This script handles the UI the player seens in the different scenes.
+/// </summary>
 public class UIHandler : MonoBehaviour
 {
     [SerializeField]
     private Button _resumeBtn;
 
     [SerializeField]
-    private Image _backgroundImg;
-
-    [SerializeField]
-    private Image _playerLife1Img;
-    
-    [SerializeField]
-    private Image _playerLife2Img; 
-    
-    [SerializeField]
-    private Image _playerLife3Img;
-
-    //[SerializeField]
-    private Enemy _enemy;
-
-    private Player _playerMovement;
-
-    [SerializeField]
     private GameObject _gameOver;
 
     [SerializeField]
-    private GameObject _enemyGO;
+    private Image _backgroundImg, _playerLife1Img, _playerLife2Img, _playerLife3Img;
 
     [SerializeField]
-    private TMP_Text _gameWon;
-
-    [SerializeField]
-    private TMP_Text _questions;
-
-    private int currentScene;
+    private TMP_Text _gameWon, _questions;
 
     [SerializeField]
     private Math _math;
-
+   
     [SerializeField]
-    private int questionsCorrect = 0,
-    questionsIncorrect = 0, maxQuestions = 10;
+    private AudioSource _winGame, _loseGame, _enemyDie, _click, _clickBack;
 
     [SerializeField]
     private Animator _enemyAnimator;
 
-    private bool isGameOver = false;
-    private bool isGameWon = false;
-
-    [SerializeField]
-    private AudioSource _winGame;
-
-    [SerializeField]
-    private AudioSource _loseGame;
-
-    [SerializeField]
-    private AudioSource _enemyDie;
-   
-    [SerializeField]
-    private AudioSource _click;
-
-    [SerializeField]
-    private AudioSource _clickBack;
-
     [SerializeField]
     private PrefabHandler prefabHandler;
 
+    private Enemy _enemy;
+    private Player _playerMovement;
+
+    private int currentScene, questionsCorrect = 0, questionsIncorrect = 0, maxQuestions = 10;
+    private bool isGameWon = false;
+
     private void Start()
     {
-
-
+        PauseGame(false);
         currentScene = SceneManager.GetActiveScene().buildIndex;
 
-        PauseGame(false);
         _math = FindObjectOfType<Math>();
         _math.MathIncorrect += OnMathIncorrect;
         _math.MathCorrect += OnMathCorrect;
 
         _resumeBtn.gameObject.SetActive(false);
         _backgroundImg.gameObject.SetActive(false);
-
-        _enemy = FindObjectOfType<Enemy>();
-        //_enemyAnimator = _enemy.GetComponentInChildren<Animator>();
-
-
-        if (_enemy == null)
-        {
-            return;
-        }
-         
-        
-       // _enemyAnimator = FindObjectOfType<Animator>();
-       //_enemyAnimator = _enemyGO.GetComponent<Animator>();
-        _enemyAnimator = _enemy.GetComponent<Animator>();
-       
         _gameOver.gameObject.SetActive(false);
 
-        if (currentScene == 1)
-        {
+        _enemy = FindObjectOfType<Enemy>();
+
+        if (_enemy == null) {
+            return;
+        } 
+        
+        _enemyAnimator = _enemy.GetComponent<Animator>();
+
+
+        if (currentScene == 1) {
             _playerLife1Img.gameObject.SetActive(true);
             _playerLife2Img.gameObject.SetActive(true);
             _playerLife3Img.gameObject.SetActive(true);
         }
+        else
+            return;
 
 
         _playerMovement = FindObjectOfType<Player>();
-        if (_playerMovement != null)
-        {
+
+        if (_playerMovement != null) {
             _playerMovement.GameWon += OnGameWon;
             _playerMovement.GameOver += OnGameOver;
         }
@@ -121,28 +81,34 @@ public class UIHandler : MonoBehaviour
 
 
 
-        if (_winGame == null)
-            return;
+        if (_winGame == null) { 
+            return; 
+        }
 
-        if (_enemyDie == null)
+        if (_enemyDie == null) { 
             return;
-        
-        if (_loseGame == null)
-            return;
+        }
 
-        if (_click == null)
+        if (_loseGame == null) {
             return;
+        }
 
-        if (_clickBack == null)
+        if (_click == null) {
             return;
+        }
+
+        if (_clickBack == null) {
+            return;
+        }
     }
 
     private void FixedUpdate()
     {
         _enemy = FindObjectOfType<Enemy>();
 
-        if (_enemy != null)
-        _enemy.GameOver += OnGameOver;
+        if (_enemy != null) {
+            _enemy.GameOver += OnGameOver;
+        }
         else
             return;
 
@@ -150,77 +116,59 @@ public class UIHandler : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Escape)) 
-            OnMenuClick();
+        if (Input.GetKeyUp(KeyCode.Escape)) {
+            OnMenuClick(); 
+        }
 
-        if (_enemy == null)
-        {
+        if (_enemy == null) {
             return;
         }
 
         _enemyAnimator = _enemy.GetComponent<Animator>();
-
     }
 
     private void OnMathIncorrect()
     {
-
         questionsIncorrect += 1;
 
-        if (questionsIncorrect == 0)
-        {
+        if (questionsIncorrect == 0) {
             _playerLife1Img.gameObject.SetActive(true); 
             _playerLife2Img.gameObject.SetActive(true);
             _playerLife3Img.gameObject.SetActive(true);
         }
 
-        if (questionsIncorrect == 1)
-        {
+        if (questionsIncorrect == 1) {
             _playerLife3Img.gameObject.SetActive(false);
         }
 
-        if (questionsIncorrect == 2)
-        {
+        if (questionsIncorrect == 2) {
             _playerLife2Img.gameObject.SetActive(false);
         }
 
-        if (questionsIncorrect == 3)
-        {
+        if (questionsIncorrect == 3) {
             _playerLife1Img.gameObject.SetActive(false);
-            
             QuestionsGameOver();
         }
-
-
-
-        Debug.Log("Questions incorrect is: " + questionsIncorrect);
-        
     }
 
     private void OnMathCorrect()
     {
         questionsCorrect += 1;
-        
-        if (_questions != null)
+
+        if (_questions != null) {
             _questions.text = $"{questionsCorrect} / {maxQuestions}";
-        
-
-        if (questionsCorrect == maxQuestions)
-        {
-            OnGameWon();
-
         }
-        Debug.Log("Questions correct is: " + questionsCorrect);
-        
-    }
 
-   
+        if (questionsCorrect == maxQuestions) {
+            OnGameWon();
+        }
+    }
+ 
     private void QuestionsGameOver()
     {
-        //_gameWon.text = "Game Over!";
         currentScene = SceneManager.GetActiveScene().buildIndex;
-        if (currentScene == 1)
-        {
+        
+        if (currentScene == 1) {
             OnGameOver();
         }
     }
@@ -228,73 +176,74 @@ public class UIHandler : MonoBehaviour
     public void OnMenuClick()
     {
         _click.Play(); 
+       
         _resumeBtn.gameObject.SetActive(true);
         _backgroundImg.gameObject.SetActive(true);
+       
         PauseGame(true);
     }
 
     public void OnResumeClick()
     {
         _clickBack.Play();
+        
         _resumeBtn.gameObject.SetActive(false);
         _backgroundImg.gameObject.SetActive(false);
+       
         PauseGame(false);
     }
 
     private void OnGameWon()
     {
-        Debug.Log("Game won!");
         isGameWon = true;
         
         StartCoroutine(IWaitForAnim("Die", "You Won!"));
-        //_enemyDie.Play();
     }
 
     private void OnGameOver()
     {
-        Debug.Log("Game lost!");
-
         isGameWon = false;
+        
         StartCoroutine(IWaitForAnim("Eat", "Game Over!"));
     }
 
-
+    //Wait for animations to complete before proceding to win / lose
     private IEnumerator IWaitForAnim(string x, string y)
     {
-        
-        //_gameWon.text = $"{y}";
-        //_gameOver.gameObject.SetActive(true);
-        //_enemyAnimator.SetTrigger($"{x}");
-
-        //lose
-        if (!isGameWon)
-        {
+        //Lose
+        if (!isGameWon) {
             _gameWon.text = $"{y}";
             _gameOver.gameObject.SetActive(true);
             _enemyAnimator.SetTrigger($"{x}");
+           
             _enemyDie.Play();
             _loseGame.Play();
+           
             PauseGame(true);
         }
         
-        //win
-        if (currentScene == 2)
-        {
+        //Win
+        if (currentScene == 2) {
             _gameWon.text = $"{y}";
             _gameOver.gameObject.SetActive(true);
             _enemyAnimator.SetTrigger($"{x}");
+           
             _enemyDie.Play();
             _winGame.Play();
+           
             PauseGame(true);
         }
-        else if (prefabHandler.isSpawnPrefabs == false)
-        {
+        else if (prefabHandler.isSpawnPrefabs == false) {
+           
             yield return new WaitForSecondsRealtime(2f);
+          
             _gameWon.text = $"{y}";
             _gameOver.gameObject.SetActive(true);
             _enemyAnimator.SetTrigger($"{x}");
+           
             _enemyDie.Play();
             _winGame.Play();
+          
             PauseGame(true);
         }      
     }
@@ -316,9 +265,11 @@ public class UIHandler : MonoBehaviour
     // true = pause, false = unpause
     private void PauseGame(bool b)
     {
-        if (b)
+        if (b) {
             Time.timeScale = 0;
-        else
+        }
+        else {
             Time.timeScale = 1;
+        }
     }
 }
