@@ -32,6 +32,7 @@ public class Math : MonoBehaviour
 
     public event System.Action shootEvent;
 
+    [SerializeField]
     private int playerCurrentScore = 0;
     private int playerFinalScore = 0;
     public int playerHighScoreEasy, playerHighScoreMedium, playerHighScoreHard;
@@ -48,7 +49,12 @@ public class Math : MonoBehaviour
     private void Start()
     {
         playerDif = PlayerPrefs.GetString("PlayerDifficulty");
+        _playerScore.text = $"Score: 0";
+        _playerFinalScore.text = $"Final score is: 0";
+
+        playerFinalScore = playerCurrentScore;
         _playerScore.text = $"Score: {playerCurrentScore}";
+
         //playerHighScore = PlayerPrefs.GetInt("HighScore_Equations", 0);
 
         currentScene = SceneManager.GetActiveScene().buildIndex;
@@ -331,11 +337,12 @@ public class Math : MonoBehaviour
         int i;
         int playerNumber = 0;
         bool result = int.TryParse(_mathInputText.text, out i);
-        playerCurrentScore = 0;
 
         if (result)
         {
             playerNumber = int.Parse(_mathInputText.text);
+            _playerScore.text = $"Score: {playerCurrentScore}";
+            _playerFinalScore.text = $"Final score is: {playerFinalScore}";
         }
         else if (!result)
         {
@@ -347,28 +354,30 @@ public class Math : MonoBehaviour
 
         if (playerNumber != sumEquation)
         {
-            Debug.Log("You lose");
+            Debug.Log("Wrong Answer");
             _mathInputText.text = "";
             InputFieldFocus();
             _mathInputTextPaceHolder.text = "Try Again.";
             _playerFinalScore.text = $"Final score is: 0";
+            _playerScore.text = $"Score: {playerCurrentScore}";
+            _playerFinalScore.text = $"Final score is: {playerFinalScore}";
 
             MathIncorrect?.Invoke();
 
             return;
            
-        }
-        
+        }       
         else if (playerNumber == sumEquation)
         {
             Numbers(1,11,1,11);
             InputFieldFocus();
             _mathInputTextPaceHolder.text = "Type here.";
             playerCurrentScore += difFactor;
-            
-            playerFinalScore = playerCurrentScore;
+            playerFinalScore = playerCurrentScore;              
             _playerScore.text = $"Score: {playerCurrentScore}";
             _playerFinalScore.text = $"Final score is: {playerFinalScore}";
+            
+
             shootEvent?.Invoke();
             MathCorrect?.Invoke();
 

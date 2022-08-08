@@ -3794,7 +3794,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Score:'
+  m_text: 'Score: 0
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4434,6 +4436,7 @@ MonoBehaviour:
   _playerFinalScore: {fileID: 1507916628}
   sumEquation: 0
   sign: 
+  playerCurrentScore: 0
   playerHighScoreEasy: 0
   playerHighScoreMedium: 0
   playerHighScoreHard: 0

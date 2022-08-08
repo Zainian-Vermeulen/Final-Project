@@ -7,8 +7,6 @@ using UnityEngine.SceneManagement;
 
 public class UIHandler : MonoBehaviour
 {
-    private SceneManager sceneManager;
-
     [SerializeField]
     private Button _resumeBtn;
 
@@ -46,6 +44,7 @@ public class UIHandler : MonoBehaviour
     [SerializeField]
     private Math _math;
 
+    [SerializeField]
     private int questionsCorrect = 0,
     questionsIncorrect = 0, maxQuestions = 10;
 
@@ -70,9 +69,13 @@ public class UIHandler : MonoBehaviour
     [SerializeField]
     private AudioSource _clickBack;
 
+    [SerializeField]
+    private PrefabHandler prefabHandler;
 
     private void Start()
     {
+
+
         currentScene = SceneManager.GetActiveScene().buildIndex;
 
         PauseGame(false);
@@ -204,7 +207,6 @@ public class UIHandler : MonoBehaviour
 
         if (questionsCorrect == maxQuestions)
         {
-            // _gameWon.text = "You Won!";
             OnGameWon();
 
         }
@@ -243,8 +245,9 @@ public class UIHandler : MonoBehaviour
     {
         Debug.Log("Game won!");
         isGameWon = true;
-        _enemyDie.Play();
+        
         StartCoroutine(IWaitForAnim("Die", "You Won!"));
+        //_enemyDie.Play();
     }
 
     private void OnGameOver()
@@ -258,20 +261,42 @@ public class UIHandler : MonoBehaviour
 
     private IEnumerator IWaitForAnim(string x, string y)
     {
-        _enemyAnimator.SetTrigger($"{x}");
-        yield return new WaitForSecondsRealtime(1.2f);
-        _gameWon.text = $"{y}";
-        _gameOver.gameObject.SetActive(true);
+        
+        //_gameWon.text = $"{y}";
+        //_gameOver.gameObject.SetActive(true);
+        //_enemyAnimator.SetTrigger($"{x}");
 
-        if (isGameWon)
+        //lose
+        if (!isGameWon)
         {
-            _winGame.Play();
-
-        }
-        else
+            _gameWon.text = $"{y}";
+            _gameOver.gameObject.SetActive(true);
+            _enemyAnimator.SetTrigger($"{x}");
+            _enemyDie.Play();
             _loseGame.Play();
-
-        PauseGame(true); 
+            PauseGame(true);
+        }
+        
+        //win
+        if (currentScene == 2)
+        {
+            _gameWon.text = $"{y}";
+            _gameOver.gameObject.SetActive(true);
+            _enemyAnimator.SetTrigger($"{x}");
+            _enemyDie.Play();
+            _winGame.Play();
+            PauseGame(true);
+        }
+        else if (prefabHandler.isSpawnPrefabs == false)
+        {
+            yield return new WaitForSecondsRealtime(2f);
+            _gameWon.text = $"{y}";
+            _gameOver.gameObject.SetActive(true);
+            _enemyAnimator.SetTrigger($"{x}");
+            _enemyDie.Play();
+            _winGame.Play();
+            PauseGame(true);
+        }      
     }
 
     public void OnRestartClick()

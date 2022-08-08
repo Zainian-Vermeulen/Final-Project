@@ -20,8 +20,7 @@ public class PrefabHandler : MonoBehaviour
     public GameObject enemyInScene;
     public GameObject bulletInScene;
 
-    private bool isSpawnPrefabs = false;
-
+    public bool isSpawnPrefabs = false;
     public System.Action moveEnemy;
 
     [SerializeField]
@@ -42,6 +41,8 @@ public class PrefabHandler : MonoBehaviour
 
     [SerializeField]
     private AudioSource _shoot;
+
+   
 
     void Start()
     {
@@ -125,6 +126,8 @@ public class PrefabHandler : MonoBehaviour
         if (isSpawnPrefabs)
         {
             isSpawnPrefabs = false;
+
+            Debug.Log("isSpawnPrefabs = " + isSpawnPrefabs);
             yield return new WaitForSecondsRealtime(0.25f);
             Instantiate(_bulletPrefab, new Vector2(0.15f, 0.7f), Quaternion.Euler(0f, 0f, -90f));
             Instantiate(_enemyPrefab, _enemySpawnTransform);

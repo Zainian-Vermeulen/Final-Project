@@ -4458,6 +4458,7 @@ MonoBehaviour:
   _playerFinalScore: {fileID: 1507916628}
   sumEquation: 0
   sign: 
+  playerCurrentScore: 0
   playerHighScoreEasy: 0
   playerHighScoreMedium: 0
   playerHighScoreHard: 0
@@ -5659,6 +5660,7 @@ MonoBehaviour:
   _mathCorrect: {fileID: 1408504509}
   enemyInScene: {fileID: 0}
   bulletInScene: {fileID: 0}
+  isSpawnPrefabs: 0
   _enemySpawnTransform: {fileID: 1145529081}
   _enemyAnimator: {fileID: 6105605246802656209, guid: fdcab252ced68e048803ebc75f670b99, type: 3}
   _playerAnimator: {fileID: 2014363726}
@@ -5686,12 +5688,16 @@ MonoBehaviour:
   _gameWon: {fileID: 1755884610}
   _questions: {fileID: 967789296}
   _math: {fileID: 1408504509}
+  questionsCorrect: 0
+  questionsIncorrect: 0
+  maxQuestions: 10
   _enemyAnimator: {fileID: 0}
   _winGame: {fileID: 225144890}
   _loseGame: {fileID: 1977540439}
   _enemyDie: {fileID: 64038621}
   _click: {fileID: 1516469257}
   _clickBack: {fileID: 546903060}
+  prefabHandler: {fileID: 1752696641}
 --- !u!1 &1753558894
 GameObject:
   m_ObjectHideFlags: 0
