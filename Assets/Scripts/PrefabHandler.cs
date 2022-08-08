@@ -13,8 +13,8 @@ public class PrefabHandler : MonoBehaviour
     [SerializeField]
     private GameObject _bulletPrefab, _enemyPrefab;
 
-    public GameObject enemyInScene;
-    public GameObject bulletInScene;
+    public GameObject enemyInSceneGO;
+    public GameObject bulletInSceneGO;
 
     [SerializeField]
     private Enemy _hitTarget;
@@ -46,7 +46,7 @@ public class PrefabHandler : MonoBehaviour
         
         FindObjects();
 
-        _enemyAnimator = enemyInScene.GetComponent<Animator>();
+        _enemyAnimator = enemyInSceneGO.GetComponent<Animator>();
 
         _mathCorrect.MathCorrect += PlayerAnim;
         _hitTarget.targetHit += DestroyPrefabs;
@@ -75,11 +75,11 @@ public class PrefabHandler : MonoBehaviour
         _enemyDie.Play();
         _enemyAnimator.SetTrigger("Die");
        
-        Destroy(bulletInScene);
+        Destroy(bulletInSceneGO);
         
         yield return new WaitForSecondsRealtime(0.5f);
 
-        Destroy(enemyInScene);
+        Destroy(enemyInSceneGO);
         
         isSpawnPrefabs = true;
     }
@@ -131,10 +131,10 @@ public class PrefabHandler : MonoBehaviour
 
     private void FindObjects()
     {
-        bulletInScene = GameObject.FindGameObjectWithTag("Bullet");
-        enemyInScene = GameObject.FindGameObjectWithTag("Enemy");
+        bulletInSceneGO = GameObject.FindGameObjectWithTag("Bullet");
+        enemyInSceneGO = GameObject.FindGameObjectWithTag("Enemy");
        
-        _enemyAnimator = enemyInScene.GetComponent<Animator>();
+        _enemyAnimator = enemyInSceneGO.GetComponent<Animator>();
 
         _hitTarget = FindObjectOfType<Enemy>();
         _hitTarget.targetHit += DestroyPrefabs;   

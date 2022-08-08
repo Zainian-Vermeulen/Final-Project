@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     
     private Animator _playerAnimator;
 
-    private GameObject gameWon, enemy;
+    private GameObject gameWonGO, enemyGO;
 
     private Rigidbody2D rb;
 
@@ -22,8 +22,8 @@ public class Player : MonoBehaviour
         _mathScript = FindObjectOfType<Math>();
         _mathScript.MathCorrect += StartMovingPlayer;
 
-        enemy = GameObject.FindGameObjectWithTag("Enemy");
-        gameWon = GameObject.FindGameObjectWithTag("GameOver");
+        enemyGO = GameObject.FindGameObjectWithTag("Enemy");
+        gameWonGO = GameObject.FindGameObjectWithTag("GameOver");
 
         rb = GetComponent<Rigidbody2D>();
         _playerAnimator = GetComponent<Animator>();
@@ -36,14 +36,14 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (gameWon != null) {
-            if (gameWon.CompareTag(other.tag)) {
+        if (gameWonGO != null) {
+            if (gameWonGO.CompareTag(other.tag)) {
                 GameWon?.Invoke();
             }
         }
 
-        if (enemy != null) {
-            if (enemy.CompareTag(other.tag)) {
+        if (enemyGO != null) {
+            if (enemyGO.CompareTag(other.tag)) {
                 GameOver?.Invoke();
             }
         }
