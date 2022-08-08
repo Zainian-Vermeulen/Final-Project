@@ -14,26 +14,16 @@ using TMPro;
 public class MainMenu : MonoBehaviour
 {
     [SerializeField]
-    private TMP_Text _playerHighScoreEasyEquations;
+    private Button _equationsGameBtn, _playGameBtn, _backBtn, _highScoreBtn;
 
+    //Multiply | Devide
     [SerializeField]
-    private TMP_Text _playerHighScoreMediumEquations; 
-    
+    private TMP_Text _playerHighScoreEasyEquations, _playerHighScoreMediumEquations, _playerHighScoreHardEquations;
+
+    //Plus | Minus
     [SerializeField]
-    private TMP_Text _playerHighScoreHardEquations;
+    private TMP_Text _playerHighScoreEasyLinear, _playerHighScoreMediumLinear, _playerHighScoreHardLinear;
 
-    [SerializeField]
-    private TMP_Text _playerHighScoreEasyLinear;
-
-    [SerializeField]
-    private TMP_Text _playerHighScoreMediumLinear;
-
-    [SerializeField]
-    private TMP_Text _playerHighScoreHardLinear;
-
-
-    private int currentScene;
-    
     //Highscore Multiply | Divide
     private int playerHighScoreEasyEquations, playerHighScoreMediumEquations, playerHighScoreHardEquations;
 
@@ -41,43 +31,13 @@ public class MainMenu : MonoBehaviour
     private int playerHighScoreEasyLinear, playerHighScoreMediumLinear, playerHighScoreHardLinear;
 
     [SerializeField]
-    private Button _equationsGameBtn;
-
-    [SerializeField]
-    private Button _playGameBtn;
-
-    [SerializeField]
-    private Button _backBtn;
-
-    [SerializeField]
-    private Button _quitBtn;
-
-    [SerializeField]
-    private Button _highScoreBtn;
-
-    [SerializeField]
-    private GameObject _menu1;
-
-    [SerializeField]
-    private GameObject _menu2;
-
-    [SerializeField]
-    private GameObject _menu3;
-    
-    [SerializeField]
-    private GameObject _menu4;
-
-    private string playerDif;
-
-    [SerializeField]
-    private AudioSource _click;
-
-    [SerializeField]
-    private AudioSource _clickBack;
+    private GameObject _menu1, _menu2, _menu3, _menu4, _difficulty;
 
 
     [SerializeField]
-    private GameObject _difficulty;
+    private AudioSource _click, _clickBack;
+
+    private int currentScene;
 
     void Start()
     {
