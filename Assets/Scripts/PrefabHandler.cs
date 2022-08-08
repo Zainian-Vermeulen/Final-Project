@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// This script handles the prefabs in the scenes.
+/// It spawns the prefabs at specific times and then play the appropriate animations.
+/// </summary>
+
 public class PrefabHandler : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _bulletPrefab;
+    private GameObject _bulletPrefab, _enemyPrefab;
 
-    [SerializeField]
-    private GameObject _enemyPrefab;
+    public GameObject enemyInScene;
+    public GameObject bulletInScene;
 
     [SerializeField]
     private Enemy _hitTarget;
@@ -17,58 +22,42 @@ public class PrefabHandler : MonoBehaviour
     [SerializeField]
     private Math _mathCorrect;
 
-    public GameObject enemyInScene;
-    public GameObject bulletInScene;
+    [SerializeField]
+    private AudioSource _enemyDie, _shoot;
 
-    public bool isSpawnPrefabs = false;
-    public System.Action moveEnemy;
+    [SerializeField]
+    private Animator _enemyAnimator, _playerAnimator;
 
     [SerializeField]
     private Transform _enemySpawnTransform;
 
-    [SerializeField]
-    private Animator _enemyAnimator;
+    public event System.Action shootRn, moveEnemy;
 
-    [SerializeField]
-    private Animator _playerAnimator;
-
-    private int currentScene;
-
-    public event System.Action shootRn;
-
-    [SerializeField]
-    private AudioSource _enemyDie;
-
-    [SerializeField]
-    private AudioSource _shoot;
-
+    public bool isSpawnPrefabs = false;
    
+    private int currentScene;
 
     void Start()
     {
-
-        
-
         currentScene = SceneManager.GetActiveScene().buildIndex;
-
-        
 
         Instantiate(_bulletPrefab, new Vector2(0.08f, 0.7f), Quaternion.Euler(0f, 0f, -90f));
         Instantiate(_enemyPrefab, _enemySpawnTransform);
+        
         FindObjects();
 
         _enemyAnimator = enemyInScene.GetComponent<Animator>();
 
-
         _mathCorrect.MathCorrect += PlayerAnim;
         _hitTarget.targetHit += DestroyPrefabs;
 
-        if (_shoot == null)
+        if (_shoot == null) {
             return;
+        }
 
-        if (_enemyDie == null)
+        if (_enemyDie == null) {
             return;
-
+        }
     }
 
     void Update()
@@ -79,17 +68,19 @@ public class PrefabHandler : MonoBehaviour
     private void DestroyPrefabs()
     {
         StartCoroutine(IDestroyPrefabs());
-
     }
 
     private IEnumerator IDestroyPrefabs()
     {
         _enemyDie.Play();
         _enemyAnimator.SetTrigger("Die");
+       
         Destroy(bulletInScene);
+        
         yield return new WaitForSecondsRealtime(0.5f);
 
         Destroy(enemyInScene);
+        
         isSpawnPrefabs = true;
     }
 
@@ -102,14 +93,14 @@ public class PrefabHandler : MonoBehaviour
 
     private IEnumerator IWaitForAttack()
     {
-        if (currentScene == 1)
-        {
-            if (_playerAnimator != null)
-            {
+        if (currentScene == 1) {
+            if (_playerAnimator != null) {
                 _playerAnimator.SetTrigger("Attack");
                 
                 yield return new WaitForSecondsRealtime(0.9f);
+               
                 _playerAnimator.SetTrigger("Idle");
+                
                 _shoot.Play();
                 shootRn?.Invoke();
  
@@ -117,20 +108,18 @@ public class PrefabHandler : MonoBehaviour
             else
                yield return null;
         }
-
-        
     }
 
     private IEnumerator SpawnPrefabs()
     {
-        if (isSpawnPrefabs)
-        {
+        if (isSpawnPrefabs) {
             isSpawnPrefabs = false;
 
-            Debug.Log("isSpawnPrefabs = " + isSpawnPrefabs);
             yield return new WaitForSecondsRealtime(0.25f);
+            
             Instantiate(_bulletPrefab, new Vector2(0.15f, 0.7f), Quaternion.Euler(0f, 0f, -90f));
             Instantiate(_enemyPrefab, _enemySpawnTransform);
+           
             FindObjects();
 
             _enemyAnimator.Rebind();
@@ -144,6 +133,7 @@ public class PrefabHandler : MonoBehaviour
     {
         bulletInScene = GameObject.FindGameObjectWithTag("Bullet");
         enemyInScene = GameObject.FindGameObjectWithTag("Enemy");
+       
         _enemyAnimator = enemyInScene.GetComponent<Animator>();
 
         _hitTarget = FindObjectOfType<Enemy>();

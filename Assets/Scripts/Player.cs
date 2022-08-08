@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// This script handles the player movement in the Plus | Minus scene
 /// </summary>
-/// 
+
 public class Player : MonoBehaviour
 {
     public event System.Action GameOver, GameWon;
@@ -16,11 +16,6 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
 
     private Math _mathScript;
-    //private GameObject enemy;
-
-   // public event System.Action GameWon;
-
-
 
     void Start()
     {
@@ -33,8 +28,6 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         _playerAnimator = GetComponent<Animator>();
     }
-
-
 
     private void StartMovingPlayer()
     {

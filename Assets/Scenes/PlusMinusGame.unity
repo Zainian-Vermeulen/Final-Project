@@ -336,10 +336,10 @@ GameObject:
   - component: {fileID: 72331457}
   - component: {fileID: 72331456}
   - component: {fileID: 72331455}
-  - component: {fileID: 72331454}
   - component: {fileID: 72331453}
   - component: {fileID: 72331459}
   - component: {fileID: 72331458}
+  - component: {fileID: 72331460}
   m_Layer: 0
   m_Name: 'Player '
   m_TagString: Untagged
@@ -363,19 +363,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0.0031820934, y: 0.49585155}
   m_Size: {x: 0.30735123, y: 2.2389088}
   m_Direction: 0
---- !u!114 &72331454
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 72331452}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd6513b35a5dbcc4ea68627f4c073784, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerAnimator: {fileID: 0}
 --- !u!50 &72331455
 Rigidbody2D:
   serializedVersion: 4
@@ -499,6 +486,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &72331460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72331452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd6513b35a5dbcc4ea68627f4c073784, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &81936989
 GameObject:
   m_ObjectHideFlags: 0
@@ -4434,9 +4433,8 @@ MonoBehaviour:
   _mathText: {fileID: 99554712}
   _playerScore: {fileID: 1166642079}
   _playerFinalScore: {fileID: 1507916628}
-  sumEquation: 0
-  sign: 
   playerCurrentScore: 0
+  sign: 
   playerHighScoreEasy: 0
   playerHighScoreMedium: 0
   playerHighScoreHard: 0
@@ -5556,12 +5554,16 @@ MonoBehaviour:
   _gameWon: {fileID: 1755884610}
   _questions: {fileID: 0}
   _math: {fileID: 1408504509}
+  questionsCorrect: 0
+  questionsIncorrect: 0
+  maxQuestions: 10
   _enemyAnimator: {fileID: 1614640749}
   _winGame: {fileID: 2054864000}
   _loseGame: {fileID: 505616775}
   _enemyDie: {fileID: 1678375816}
   _click: {fileID: 2105654531}
   _clickBack: {fileID: 2134963345}
+  prefabHandler: {fileID: 0}
 --- !u!1 &1753558894
 GameObject:
   m_ObjectHideFlags: 0
