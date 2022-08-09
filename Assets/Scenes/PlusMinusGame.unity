@@ -4874,6 +4874,10 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7016032315269242537, guid: fdcab252ced68e048803ebc75f670b99, type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 72331452}
     - target: {fileID: 8213153671696039642, guid: fdcab252ced68e048803ebc75f670b99, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -5545,25 +5549,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _resumeBtn: {fileID: 1924109626}
+  _gameOver: {fileID: 1753558894}
   _backgroundImg: {fileID: 1824183283}
   _playerLife1Img: {fileID: 1823316345}
   _playerLife2Img: {fileID: 724851272}
   _playerLife3Img: {fileID: 684456716}
-  _gameOver: {fileID: 1753558894}
-  _enemyGO: {fileID: 1614640747}
   _gameWon: {fileID: 1755884610}
   _questions: {fileID: 0}
   _math: {fileID: 1408504509}
-  questionsCorrect: 0
-  questionsIncorrect: 0
-  maxQuestions: 10
-  _enemyAnimator: {fileID: 1614640749}
   _winGame: {fileID: 2054864000}
   _loseGame: {fileID: 505616775}
   _enemyDie: {fileID: 1678375816}
   _click: {fileID: 2105654531}
   _clickBack: {fileID: 2134963345}
+  _enemyAnimator: {fileID: 1614640749}
   prefabHandler: {fileID: 0}
+  _playerMovement: {fileID: 72331460}
 --- !u!1 &1753558894
 GameObject:
   m_ObjectHideFlags: 0

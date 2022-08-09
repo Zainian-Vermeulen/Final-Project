@@ -34,6 +34,7 @@ public class UIHandler : MonoBehaviour
     private PrefabHandler prefabHandler;
 
     private Enemy _enemy;
+    [SerializeField]
     private Player _playerMovement;
 
     private int currentScene, questionsCorrect = 0, questionsIncorrect = 0, maxQuestions = 10;
@@ -54,6 +55,16 @@ public class UIHandler : MonoBehaviour
 
         _enemy = FindObjectOfType<Enemy>();
 
+        if (_playerMovement != null)
+        {
+
+            _playerMovement.GameWon += OnGameWon;
+            _playerMovement.GameOver += OnGameOver;
+        }
+        else
+            return;
+
+
         if (_enemy == null) {
             return;
         } 
@@ -70,14 +81,10 @@ public class UIHandler : MonoBehaviour
             return;
 
 
-        _playerMovement = FindObjectOfType<Player>();
+      // _playerMovement = FindObjectOfType<Player>();
 
-        if (_playerMovement != null) {
-            _playerMovement.GameWon += OnGameWon;
-            _playerMovement.GameOver += OnGameOver;
-        }
-        else
-            return;
+       
+           
 
 
 

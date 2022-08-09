@@ -7,7 +7,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public event System.Action GameOver, GameWon;
+    public event System.Action GameOver;
+        public event System.Action GameWon;
     
     private Animator _playerAnimator;
 
@@ -43,7 +44,9 @@ public class Player : MonoBehaviour
         }
 
         if (enemyGO != null) {
+            Debug.Log("Here 2");
             if (enemyGO.CompareTag(other.tag)) {
+                Debug.Log("Here 3");
                 GameOver?.Invoke();
             }
         }
